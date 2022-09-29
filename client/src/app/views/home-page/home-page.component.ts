@@ -7,10 +7,15 @@ import { GameService } from 'src/app/shared/services/game.service';
   styleUrls: ['./home-page.component.scss']
 })
 export class HomePageComponent implements OnInit {
+  champions: any = null;
 
   constructor(private gameService: GameService) { }
 
   ngOnInit(): void {
-    this.gameService.getGames();
+    // this.gameService.getGames();
+    // this.gameService.getGamesTimeline();
+    this.gameService.getChampions();
+    // console.log(this.gameService.getChampions());
+    
   }
 }

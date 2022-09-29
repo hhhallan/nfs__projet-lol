@@ -18,6 +18,11 @@ class Champion
     private $id;
 
     /**
+     * @ORM\Column(type="string", length=20)
+     */
+    private $championId;
+
+    /**
      * @ORM\Column(type="string", length=120)
      */
     private $name;
@@ -25,16 +30,23 @@ class Champion
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $imgFull;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $imgSprite;
+    private $image;
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getChampionId(): string
+    {
+        return $this->championId;
+    }
+
+    public function setChampionId(string $championId): self
+    {
+        $this->championId = $championId;
+
+        return $this;
     }
 
     public function getName(): ?string
@@ -49,26 +61,14 @@ class Champion
         return $this;
     }
 
-    public function getImgFull(): ?string
+    public function getImage(): ?string
     {
-        return $this->imgFull;
+        return $this->image;
     }
 
-    public function setImgFull(?string $imgFull): self
+    public function setImage(?string $image): self
     {
-        $this->imgFull = $imgFull;
-
-        return $this;
-    }
-
-    public function getImgSprite(): ?string
-    {
-        return $this->imgSprite;
-    }
-
-    public function setImgSprite(?string $imgSprite): self
-    {
-        $this->imgSprite = $imgSprite;
+        $this->image = $image;
 
         return $this;
     }
