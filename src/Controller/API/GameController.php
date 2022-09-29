@@ -4,6 +4,7 @@ namespace App\Controller\API;
 
 use App\Repository\GameRepository;
 use App\Repository\GameTimelineRepository;
+use App\Services\FormatService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,17 +14,23 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class GameController extends AbstractController
 {
+    private FormatService $formatServices;
+
     private GameRepository $gameRepo;
 
     private GameTimelineRepository $gameTimelineRepo;
 
     public function __construct(
+        FormatService $formatServices,
         GameRepository $gameRepo,
         GameTimelineRepository $gameTimelineRepo
     ) {
+        $this->formatServices   = $formatServices;
         $this->gameRepo         = $gameRepo;
         $this->gameTimelineRepo = $gameTimelineRepo;
     }
+
+    
 
     /**
      * @Route("/get-games", name="get_games", methods={"GET"})
@@ -31,7 +38,14 @@ class GameController extends AbstractController
     public function getGames(): JsonResponse
     {
         $games = $this->gameRepo->findAll();
-        return $this->json($games);
+
+        $formattedGames = [];
+
+        for ($k = 0; $k < sizeof($games); $k++) { 
+            $formattedGames[$k] = $this->formatServices->formatGame($games[$k]->getContent());
+        }
+
+        return $this->json($formattedGames);
     }
 
     /**
@@ -39,7 +53,10 @@ class GameController extends AbstractController
      */
     public function getGamesTimeline(): JsonResponse
     {
-        $gamesTimeline = $this->gameTimelineRepo->findAll();
+        // $gamesTimeline = $this->gameTimelineRepo->findAll();
+        $gamesTimeline = $this->gameTimelineRepo->findOneBy(['id'=>1]);
+
+        dd($gamesTimeline);
         return $this->json($gamesTimeline);
     }
 }
