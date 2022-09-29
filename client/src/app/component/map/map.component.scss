@@ -1,0 +1,41 @@
+*, ::before, ::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 100%;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.wrapper {
+  display: table;
+  height: 100%;
+  max-width: 930px;
+  /* Il y a 15px de moins de chaque côté !! */
+  width: 100%;
+  margin: 20px auto 0;
+}
+
+.container {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+
+#map {
+  width: calc(100% - 30px);
+  min-width: 350px;
+  height: auto;
+  z-index: 0;
+  margin: 0 auto;
+
+  background-image: url("../../../assets/img/map.png");
+  background-size: cover;
+}
