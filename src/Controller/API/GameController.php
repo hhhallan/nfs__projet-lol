@@ -2,8 +2,11 @@
 
 namespace App\Controller\API;
 
+use App\Entity\Summoner;
+use App\Repository\ChampionRepository;
 use App\Repository\GameRepository;
 use App\Repository\GameTimelineRepository;
+use App\Repository\SummonerRepository;
 use App\Services\FormatService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -20,17 +23,23 @@ class GameController extends AbstractController
 
     private GameTimelineRepository $gameTimelineRepo;
 
+    private ChampionRepository $championRepo;
+
+    private SummonerRepository $summonerRepo;
+
     public function __construct(
         FormatService $formatServices,
         GameRepository $gameRepo,
-        GameTimelineRepository $gameTimelineRepo
+        GameTimelineRepository $gameTimelineRepo,
+        ChampionRepository $championRepo,
+        SummonerRepository $summonerRepo
     ) {
         $this->formatServices   = $formatServices;
         $this->gameRepo         = $gameRepo;
         $this->gameTimelineRepo = $gameTimelineRepo;
+        $this->championRepo     = $championRepo;
+        $this->summonerRepo     = $summonerRepo;
     }
-
-    
 
     /**
      * @Route("/get-games", name="get_games", methods={"GET"})
@@ -50,17 +59,47 @@ class GameController extends AbstractController
         return $this->json($formattedGames);
     }
 
-    // /**
-    //  * @Route("/get-games-timeline", name="get_games_timeline", methods={"GET"})
-    //  */
-    // public function getGamesTimeline(): JsonResponse
-    // {
-    //     $gamesTimeline = $this->gameTimelineRepo->findAll();
-    //     // $gamesTimeline = $this->gameTimelineRepo->findOneBy(['id'=>1]);
+    /**
+     * @Route("/get-game/{id}", name="get_game", methods={"GET"})
+     */
+    public function getGameById(string $id): JsonResponse
+    {
+        try {
+            $game = $this->gameRepo->findOneBy(['matchId' => $id]);
+            $gamesTimeline = $this->gameTimelineRepo->findOneBy(['matchId' => $id]);
+            $formattedGame = $this->formatServices->formatGame($game);
+            $formattedGame['kills'] = $this->formatServices->cleanMatchTimeline($gamesTimeline->getContent(), []);
 
-    //     // $g = $this->formatServices->cleanMatchTimeline($gamesTimeline->getContent(), []);
+            return $this->json($formattedGame);
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
 
+    /**
+     * @Route("/get-champion-thumbnail/{id}", name="get_champion_thumbnail", methods={"GET"})
+     */
+    public function getChampionThumbnail(int $id): JsonResponse
+    {
+        try {
+            $champion = $this->championRepo->findOneBy(['championId' => $id]);
 
-    //     return $this->json($gamesTimeline);
-    // }
+            return $this->json($champion);
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    /**
+     * @Route("/get-summoner/{name}", name="get_champion_thumbnail", methods={"GET"})
+     */
+    public function getSummoner(string $name): JsonResponse
+    {
+        try {
+            $sumonner = $this->summonerRepo->findLikeName($name);
+            return $this->json($sumonner);
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
 }
