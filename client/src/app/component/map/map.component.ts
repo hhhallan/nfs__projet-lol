@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {GameService} from "../../shared/services/game.service";
 
 @Component({
@@ -6,10 +6,10 @@ import {GameService} from "../../shared/services/game.service";
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements AfterViewInit {
 
-  @ViewChild('map')
-  private map: ElementRef = {} as ElementRef;
+  @ViewChild('map') map: ElementRef | undefined;
+  private ctx!: CanvasRenderingContext2D | null;
 
   data = {
     "turrets": [
@@ -52,56 +52,95 @@ export class MapComponent implements OnInit {
     ]
   }
 
-  constructor(private gameService: GameService, private ctx: CanvasRenderingContext2D) { }
+  constructor(private gameService: GameService) { }
 
-  ngOnInit(): void {
-    // let canvas: HTMLCanvasElement = <HTMLCanvasElement> document.getElementById('map');
-    // this.ctx = canvas.getContext("2d");
+  ngAfterViewInit() {
+    this.gameService.getGamesTimeline();
 
-    this.gameService.getGames();
-    this.ctx = this.map.nativeElement.getContext('2d');
+    this.ctx = (this.map!.nativeElement as HTMLCanvasElement).getContext('2d');
+
+    this.turretsPosition();
+    this.mobsPosition();
+    this.killsPosition();
   }
 
+  /* * * * * * * * * * * * * *
+  * P O S I T I O N S
+  * * * * * * * * * * * * * * */
   turretsPosition() {
     this.data.turrets.forEach(el => {
       el.RED.forEach(e => {
-        this.ctx.fillStyle = "red";
-        this.ctx.beginPath();
-        this.ctx.arc(this.toX(e.x), this.toY(e.y), 10, 0, 2 * Math.PI);
-        this.ctx.fill();
+        this.ctx!.fillStyle = "red";
+        this.ctx!.beginPath();
+        this.ctx!.arc(this.toX(e.x), this.toY(e.y), 10, 0, 2 * Math.PI);
+        this.ctx!.fill();
       });
 
       el.BLUE.forEach(e => {
-        this.ctx.fillStyle = "blue";
-        this.ctx.beginPath();
-        this.ctx.arc(this.toX(e.x), this.toY(e.y), 10, 0, 2 * Math.PI);
-        this.ctx.fill();
+        this.ctx!.fillStyle = "blue";
+        this.ctx!.beginPath();
+        this.ctx!.arc(this.toX(e.x), this.toY(e.y), 10, 0, 2 * Math.PI);
+        this.ctx!.fill();
       });
     })
   }
 
   mobsPosition() {
-    /*this.ctx.fillStyle = "white";
+    this.ctx!.fillStyle = "white";
     // DRAGONS
-    this.ctx.beginPath();
-    this.ctx.arc(this.toX(10100), this.toY(4480), 10, 0, 2 * Math.PI);
-    this.ctx.fill();
+    this.ctx!.beginPath();
+    this.ctx!.arc(this.toX(10100), this.toY(4480), 10, 0, 2 * Math.PI);
+    this.ctx!.fill();
 
     // BARON + HERALD
-    this.ctx.beginPath();
-    this.ctx.arc(this.toX(5000), this.toY(10600), 10, 0, 2 * Math.PI);
-    this.ctx.fill();*/
+    this.ctx!.beginPath();
+    this.ctx!.arc(this.toX(5000), this.toY(10600), 10, 0, 2 * Math.PI);
+    this.ctx!.fill();
   }
 
   killsPosition() {
+   /* fetch(this.gameService.getGames())
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        frames = data.info.frames;
 
+        let event_type = [];
+        let champ_kills = [];
+
+        frames.forEach(el => {
+
+          el.events.forEach(ev => {
+
+            // console.log(ev)
+
+            if (ev.type = "CHAMPION_KILL" && ev.assistingParticipantIds) {
+              // console.log(ev)
+              let color = "black";
+
+              if (ev.buildingType) {
+                color = "grey";
+              } else if (ev.monsterSubType) {
+                color = "purple";
+              } else if (ev.monsterType) {
+                color = "green";
+              } else {
+                color = "pink";
+              }
+              ctx.beginPath();
+              ctx.fillStyle = color;
+              ctx.arc(toX(ev.position.x), toY(ev.position.y), 10, 0, 2 * Math.PI);
+              ctx.fill();
+            }
+          })
+        })
+      })*/
   }
 
-  // CALCULS
-// map 15000 px x 15000 px
-// canvas taille base = 900px
-// ( 900 / 15 000 ) * 100 = 6%
-
+  /* * * * * * * * * * * * * *
+  * C A L C U L S
+  * * * * * * * * * * * * * * */
   toX(baseValue: number) {
     return baseValue * 0.06;
   }

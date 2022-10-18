@@ -11,6 +11,6 @@ export class HomePageComponent implements OnInit {
   constructor(private gameService: GameService) { }
 
   ngOnInit(): void {
-    this.gameService.getGames();
+    // this.gameService.getGamesTimeline();
   }
 }
