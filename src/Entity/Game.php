@@ -22,6 +22,11 @@ class Game
      */
     private $content = [];
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $matchId;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -35,6 +40,18 @@ class Game
     public function setContent(array $content): self
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function getMatchId(): ?string
+    {
+        return $this->matchId;
+    }
+
+    public function setMatchId(string $matchId): self
+    {
+        $this->matchId = $matchId;
 
         return $this;
     }
