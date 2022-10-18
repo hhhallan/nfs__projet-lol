@@ -38,25 +38,29 @@ class GameController extends AbstractController
     public function getGames(): JsonResponse
     {
         $games = $this->gameRepo->findAll();
+        $gamesTimeline = $this->gameTimelineRepo->findAll();
 
         $formattedGames = [];
 
         for ($k = 0; $k < sizeof($games); $k++) { 
-            $formattedGames[$k] = $this->formatServices->formatGame($games[$k]->getContent());
+            $formattedGames[$k] = $this->formatServices->formatGame($games[$k]);
+            $formattedGames[$k]['kills'] = $this->formatServices->cleanMatchTimeline($gamesTimeline[$k]->getContent(), []);
         }
 
         return $this->json($formattedGames);
     }
 
-    /**
-     * @Route("/get-games-timeline", name="get_games_timeline", methods={"GET"})
-     */
-    public function getGamesTimeline(): JsonResponse
-    {
-        // $gamesTimeline = $this->gameTimelineRepo->findAll();
-        $gamesTimeline = $this->gameTimelineRepo->findOneBy(['id'=>1]);
+    // /**
+    //  * @Route("/get-games-timeline", name="get_games_timeline", methods={"GET"})
+    //  */
+    // public function getGamesTimeline(): JsonResponse
+    // {
+    //     $gamesTimeline = $this->gameTimelineRepo->findAll();
+    //     // $gamesTimeline = $this->gameTimelineRepo->findOneBy(['id'=>1]);
 
-        dd($gamesTimeline);
-        return $this->json($gamesTimeline);
-    }
+    //     // $g = $this->formatServices->cleanMatchTimeline($gamesTimeline->getContent(), []);
+
+
+    //     return $this->json($gamesTimeline);
+    // }
 }
