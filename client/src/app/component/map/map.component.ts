@@ -1,4 +1,6 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Kill } from 'src/app/core/model/Kill';
+import { Match } from 'src/app/core/model/Match';
 import { turrets } from 'src/app/shared/data/turrets';
 import { MapService } from 'src/app/shared/services/map.service';
 
@@ -9,13 +11,16 @@ import { MapService } from 'src/app/shared/services/map.service';
 })
 export class MapComponent implements OnInit, AfterViewInit {
   @ViewChild('map') map: ElementRef | undefined;
+  @Input() match: Match = <Match>{};
+
   private ctx!: CanvasRenderingContext2D | null;
   turrets = turrets;
+  kills: Kill[] = [];
 
   constructor(private mapService: MapService) { }
 
   ngOnInit(): void {
-
+    this.kills = this.match.kills;
   }
 
   ngAfterViewInit() {
@@ -23,13 +28,12 @@ export class MapComponent implements OnInit, AfterViewInit {
 
     this.displayTurrets();
     this.displayNeutralMobs();
-
-    this.killsPosition();
+    this.displayKills(this.kills);
   }
 
   /**
    * Display turrets on map
-   * @returns {void}
+   * @return {void}
    */
   displayTurrets(): void {
     this.turrets.forEach(el => {
@@ -50,7 +54,7 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   /**
    * Display neutral mobs on map
-   * @returns {void}
+   * @return {void}
    */
   displayNeutralMobs(): void {
     this.ctx!.fillStyle = "white";
@@ -65,7 +69,17 @@ export class MapComponent implements OnInit, AfterViewInit {
     this.ctx!.fill();
   }
 
-  killsPosition() {
-    
+  /**
+   * Display all kills on map
+   * @param {Kill[]} kills 
+   * @return {void}
+   */
+  displayKills(kills: Kill[]): void {
+    kills.forEach(el => {
+      this.ctx!.fillStyle = "black";
+      this.ctx!.beginPath();
+      this.ctx!.arc(this.mapService.toX(el.position.x), this.mapService.toY(el.position.y), 10, 0, 2 * Math.PI);
+      this.ctx!.fill();
+    });
   }
 }
