@@ -1,0 +1,16 @@
+*, ::after, ::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  // Mettre la f-size du html en 62.5% permet d'utiliser le REM + facilement (16px => 1.6rem)
+}
+
+body {
+  background-color: $col--bg-primary;
+  font-size: 1.6rem;
+}
+
