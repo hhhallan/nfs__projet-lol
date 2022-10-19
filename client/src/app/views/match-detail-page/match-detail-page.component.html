@@ -1,0 +1,19 @@
+<div *ngIf="isLoaded | async; else elseBlock">
+
+    <div class="container">
+
+        <h1>Détail du match {{ match.matchId }}</h1>
+
+        <app-map></app-map>
+    
+        <div class="match-kills-card">
+
+        </div>
+
+    </div>
+    
+</div>
+
+<ng-template #elseBlock>
+    <app-loading></app-loading>
+</ng-template>

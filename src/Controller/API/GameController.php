@@ -77,9 +77,9 @@ class GameController extends AbstractController
     }
 
     /**
-     * @Route("/get-champion-thumbnail/{id}", name="get_champion_thumbnail", methods={"GET"})
+     * @Route("/get-champion/{id}", name="get_champion", methods={"GET"})
      */
-    public function getChampionThumbnail(int $id): JsonResponse
+    public function getChampion(int $id): JsonResponse
     {
         try {
             $champion = $this->championRepo->findOneBy(['championId' => $id]);
