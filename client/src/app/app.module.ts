@@ -13,6 +13,7 @@ import { GameRepository } from './core/repository/GameRepository';
 import { GameTimelineRepository } from './core/repository/GameTimelineRepository';
 import { LoadingScreenComponent } from './component/loading-screen/loading-screen.component';
 import {CommonModule} from "@angular/common";
+import { TimelineComponent } from './component/timeline/timeline.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {CommonModule} from "@angular/common";
     HeaderComponent,
     FooterComponent,
     MapComponent,
-    LoadingScreenComponent
+    LoadingScreenComponent,
+    TimelineComponent
   ],
   imports: [
     BrowserModule,

@@ -1,7 +1,26 @@
 // !! Faire attention à l'ordre des imports !!
-
-// utils
 @import "./assets/css/utils/fonts";
-@import "./assets/css/utils/variables/colors";
-@import "./assets/css/utils/variables/texts";
+
+// Variables
+:root {
+  // Colors
+  --red: red;
+
+  // Text - size
+  --size: 1.6rem;
+
+  // Text - weight
+  --thin: 100;
+  --extra-light: 200;
+  --light: 300;
+  --regular: 400;
+  --medium: 500;
+  --semi-bold: 600;
+  --bold: 700;
+  --extra-bold: 800;
+  --black: 900;
+}
+
 @import "./assets/css/utils/reset";
+
+
