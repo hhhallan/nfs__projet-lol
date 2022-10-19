@@ -9,11 +9,11 @@ import { HeaderComponent } from './component/common/header/header.component';
 import { FooterComponent } from './component/common/footer/footer.component';
 import { MapComponent } from './component/map/map.component';
 import { GameService } from './shared/services/game.service';
-import { GameRepository } from './core/repository/GameRepository';
-import { GameTimelineRepository } from './core/repository/GameTimelineRepository';
 import { LoadingScreenComponent } from './component/loading-screen/loading-screen.component';
 import {CommonModule} from "@angular/common";
 import { TimelineComponent } from './component/timeline/timeline.component';
+import { MatchListPageComponent } from './views/match-list-page/match-list-page.component';
+import { MatchDetailPageComponent } from './views/match-detail-page/match-detail-page.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +23,9 @@ import { TimelineComponent } from './component/timeline/timeline.component';
     FooterComponent,
     MapComponent,
     LoadingScreenComponent,
-    TimelineComponent
+    TimelineComponent,
+    MatchListPageComponent,
+    MatchDetailPageComponent
   ],
   imports: [
     BrowserModule,
@@ -35,8 +37,6 @@ import { TimelineComponent } from './component/timeline/timeline.component';
   ],
   providers: [
     GameService,
-    GameRepository,
-    GameTimelineRepository,
   ],
   bootstrap: [AppComponent]
 })
