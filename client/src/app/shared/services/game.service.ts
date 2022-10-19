@@ -25,7 +25,7 @@ export class GameService {
     }
   }
 
-  getGamesTimeline() {
+  /*getGamesTimeline() {
     try {
       this.gameTimelineRepo.getAll().subscribe((response) => {
         // console.log(response);
@@ -40,15 +40,15 @@ export class GameService {
 
             // console.log(ev.events)
 
-            /*ev.events.forEach(type => {
+            /!*ev.events.forEach(type => {
               console.log(type)
-            })*/
+            })*!/
           })
 
           let event_type = [];
           let champ_kills = [];
 
-         /* fetch(frames)
+         /!* fetch(frames)
             .then()
 
           frames.forEach(el => {
@@ -90,7 +90,7 @@ export class GameService {
                 ctx.fill();
               }
             })
-          })*/
+          })*!/
 
         })
 
@@ -99,7 +99,7 @@ export class GameService {
     } catch (error) {
       console.log('Game service <getGames> : ' + error);
     }
-  }
+  }*/
 
   getGamesTimeline() {
     try {
@@ -112,8 +112,8 @@ export class GameService {
   }
 
   getChampions() {
-   
-      this.championRepository.getAll().subscribe({   
+
+      this.championRepository.getAll().subscribe({
         next(response) {
            console.log(response);
         }, error(msg) {
