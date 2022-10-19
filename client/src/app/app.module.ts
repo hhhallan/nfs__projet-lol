@@ -11,6 +11,8 @@ import { MapComponent } from './component/map/map.component';
 import { GameService } from './shared/services/game.service';
 import { GameRepository } from './core/repository/GameRepository';
 import { GameTimelineRepository } from './core/repository/GameTimelineRepository';
+import { LoadingScreenComponent } from './component/loading-screen/loading-screen.component';
+import {CommonModule} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -18,18 +20,21 @@ import { GameTimelineRepository } from './core/repository/GameTimelineRepository
     HomePageComponent,
     HeaderComponent,
     FooterComponent,
-    MapComponent
+    MapComponent,
+    LoadingScreenComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    CommonModule,
+    CommonModule
   ],
   providers: [
     GameService,
     GameRepository,
-    GameTimelineRepository
+    GameTimelineRepository,
   ],
   bootstrap: [AppComponent]
 })
