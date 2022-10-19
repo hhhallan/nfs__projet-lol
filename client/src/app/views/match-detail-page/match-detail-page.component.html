@@ -4,9 +4,24 @@
 
         <h1>Détail du match {{ match.matchId }}</h1>
 
-        <app-map [match]="match"></app-map>
-    
-        <div class="match-kills-card">
+        <div class="match-container">
+            
+            <app-map id="app-map" [match]="match"></app-map>
+
+            <div class="match-detail-card">
+
+                <p></p>
+
+                <div class="kill-card" *ngFor="let kill of match.kills">
+
+                    <p>Killer : {{ kill.killerId }}</p>
+                    <p>Victim : {{kill.victimId }}</p>
+                    <p>At time : {{ kill.timestamp }}</p>
+                    <p>Position : X => {{ kill.position.x }}, Y => {{ kill.position.y }}</p>
+
+                </div>
+
+            </div>
 
         </div>
 
