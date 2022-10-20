@@ -1,1 +1,17 @@
-// Importer les fonts ici
+// font principale -> Italic
+@font-face {
+    font-family: "Fritz_Italic";
+    src: local("Fritz"), url(../../fonts/Friz_Quadrata_Italic.ttf) format("truetype");
+}
+
+// font principale -> Regular
+@font-face {
+    font-family: "Fritz_Regular";
+    src: local("Fritz"), url(../../fonts/Friz_Quadrata_Regular.ttf) format("truetype");
+}
+
+// font principale -> Bold
+@font-face {
+    font-family: "Fritz_Bold";
+    src: local("Fritz"), url(../../fonts/Friz_Quadrata_Bold.ttf) format("truetype");
+}

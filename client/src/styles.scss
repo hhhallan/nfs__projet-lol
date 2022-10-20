@@ -3,14 +3,27 @@
 
 // Variables
 :root {
+
   // Colors
-  --red: red;
-  --col-match-list-bg-dark: #0d2f4f;
-  --col-match-list-bg-light: #093458;
-  --col-match-list-border: #061A2A;
-  --col-match-list-victory: #63F397;
-  --col-match-list-defeat: #E4485D;
-  --col-match-list-text-cream: #BCB196;
+    --col--bg-primary: #01384368;
+
+    --text: #fff;
+
+    --gold1: #7A6439;
+    --gold2: #97783F;
+    --gold3: #D6B46E;
+
+    --blue1: #013843;
+    --blue2: #0A706F;
+    --blue3: #1AA7B0;
+
+    --col-match-list-bg-dark: #0d2f4f;
+    --col-match-list-bg-light: #093458;
+    --col-match-list-border: #061A2A;
+    --col-match-list-victory: #63F397;
+    --col-match-list-defeat: #E4485D;
+    --col-match-list-text-cream: #BCB196;
+
 
   // Text - size
   --size: 1.6rem;
