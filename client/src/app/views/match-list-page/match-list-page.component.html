@@ -1,0 +1,38 @@
+<div *ngIf="isLoaded | async; else elseBlock">
+
+  <div class="container">
+
+    <h1>Liste des matches</h1>
+
+    <div class="matches--container">
+
+      <div class="matches--card" *ngFor="let match of matches" [routerLink]="['/match/', match.matchId]">
+
+        <div class="match--type">
+          <p>{{ match.gameMode }}</p>
+          <span class="match--victory">Victory</span>
+        </div>
+
+        <div class="match--player">
+          <div>IMG</div>
+          <div class="player--info">
+            {{ match.participants[0].kills }} / {{ match.participants[0].deaths }} / {{ match.participants[0].assists }}
+          </div>
+        </div>
+
+        <div class="match--timestamp">
+          <p>Durée</p>
+          <span>{{ roundTimestamp(match.gameDuration) + "min" }}</span>
+        </div>
+
+      </div>
+    </div>
+
+
+  </div>
+
+</div>
+
+<ng-template #elseBlock>
+  <app-loading></app-loading>
+</ng-template>

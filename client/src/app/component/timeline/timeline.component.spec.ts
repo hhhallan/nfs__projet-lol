@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LoadingScreenComponent } from './loading-screen.component';
+import { TimelineComponent } from './timeline.component';
 
-describe('LoadingScreenComponent', () => {
-  let component: LoadingScreenComponent;
-  let fixture: ComponentFixture<LoadingScreenComponent>;
+describe('TimelineComponent', () => {
+  let component: TimelineComponent;
+  let fixture: ComponentFixture<TimelineComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LoadingScreenComponent ]
+      declarations: [ TimelineComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(LoadingScreenComponent);
+    fixture = TestBed.createComponent(TimelineComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
