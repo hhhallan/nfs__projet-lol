@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Match } from 'src/app/core/model/Match';
-import { GameService } from 'src/app/shared/services/game.service';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {Match} from 'src/app/core/model/Match';
+import {GameService} from 'src/app/shared/services/game.service';
 
 @Component({
   selector: 'app-match-detail-page',
@@ -25,5 +25,9 @@ export class MatchDetailPageComponent implements OnInit {
       this.match = match;
       this.isLoaded = Promise.resolve(true);
     });
+  }
+
+  roundTimestamp(timestamp: number): number {
+    return Math.round((timestamp / 60000) * 100) / 100;
   }
 }

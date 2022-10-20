@@ -22,6 +22,11 @@ export class MatchListPageComponent implements OnInit {
     this.gameService.matches$.subscribe((matches) => {
       this.matches = matches;
       this.isLoaded = Promise.resolve(true);
+      console.log(this.matches)
     });
+  }
+
+  roundTimestamp(timestamp: number): number {
+    return Math.round((timestamp / 60) * 100) / 100;
   }
 }

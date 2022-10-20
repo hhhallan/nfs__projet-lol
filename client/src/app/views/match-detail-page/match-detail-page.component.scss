@@ -1,3 +1,142 @@
-body {
-    background-color: blue!important;
+.container {
+  //width: 100%;
+  //display: flex;
+  //flex-direction: column;
+  //align-items: center;
+  //justify-content: center;
+  //padding: 20px;
+  margin: 0 auto;
+  max-width: calc(1280px - 30px);
+  width: 100%;
+  background-color: red;
+
+  .matches-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    overflow: hidden;
+    max-height: 700px;
+
+    .match--detail-container {
+      background-color: #C8C8C8;
+      overflow: auto;
+      width: calc(1250px - 700px);
+      border-radius: 10px;
+
+      &::-webkit-scrollbar {
+        width: 1rem;
+        height: 1rem;
+        background-color: yellow;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: black;
+        border-radius: 1rem;
+        border: 4px solid yellow;
+      }
+    }
+
+    .kill-card {
+      //width: 500px;
+      width: 100%;
+      height: 80px;
+      padding: 8px 24px;
+      background-color: pink;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      border-bottom: 2px solid black;
+
+
+      .match--type {
+        font-weight: bold;
+        p {
+          font-size: 1.8rem;
+        }
+        span {
+          font-size: 1rem;
+          &.match--victory {
+            color: green;
+          }
+          &.match--defeat {
+            color: red;
+          }
+        }
+      }
+
+      .match--players {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 35%;
+
+        div {
+          width: 60px;
+          height: 60px;
+          border-radius: 5px;
+          background-color: #2dd36f;
+        }
+      }
+
+      .match--timestamp {
+        font-size: 1.4rem;
+
+        span {
+          font-size: 1.6rem;
+          font-weight: bold;
+        }
+      }
+    }
+
+  }
+
+  /* p {
+     line-height: 1.2rem;
+   }
+
+   h1 {
+     font-size: 1.4rem;
+     font-weight: 600;
+     margin-bottom: 20px;
+   }
+
+   .match-container {
+     width: 100%;
+     display: flex;
+     justify-content: space-around;
+     max-height: 700px;
+     overflow: hidden;
+
+     .match-detail-card {
+       width: 40%;
+       background-color: #C8C8C8;
+       padding: 20px;
+       overflow: auto;
+
+       // Modifs
+       border-radius: 20px;
+
+       .kill-card {
+         margin-bottom: 15px;
+         background-color: pink;
+       }
+     }
+   }
+ }
+
+ @media screen and (max-width: 570px) {
+   .match-container {
+     display: flex;
+     flex-direction: column;
+
+     #app-map {
+       width: 100% !important;
+     }
+
+     .match-detail-card {
+       width: 100% !important;
+     }
+   }*/
 }

@@ -1,0 +1,120 @@
+.container {
+  background-color: var(--col-match-list-border);
+  padding: 80px 0;
+
+  h1 {
+    text-align: center;
+    font-size: 2.4rem;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 50px;
+  }
+}
+
+.matches--container {
+  max-width: 1075px;
+  width: calc(100% - 30px);
+  margin: 0 auto;
+  border-radius: 10px;
+  overflow: hidden;
+
+
+  // Liste des matchs
+  .matches--card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px;
+    border-bottom: 2px solid var(--col-match-list-border);
+    background: linear-gradient(0.25turn, var(--col-match-list-bg-dark), var(--col-match-list-bg-light));
+    color: white;
+    padding: 1rem 3.5%;
+    cursor: pointer;
+
+    &:nth-child(even) {
+      background: linear-gradient(0.25turn, var(--col-match-list-bg-light), var(--col-match-list-bg-dark));
+    }
+
+    &:hover {
+      filter: brightness(0.8);
+    }
+
+
+    .match--type {
+      font-weight: bold;
+
+      p {
+        font-size: 1.8rem;
+      }
+
+      span {
+        font-size: 1rem;
+
+        &.match--victory {
+          color: var(--col-match-list-victory);
+        }
+
+        &.match--defeat {
+          color: var(--col-match-list-defeat);
+        }
+      }
+    }
+
+    .match--player {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      max-width: 250px;
+      min-width: 150px;
+      width: 100%;
+      //margin: 0 20px;
+
+      div:first-child {
+        width: 60px;
+        height: 60px;
+        border-radius: 5px;
+        background-color: #2dd36f;
+      }
+    }
+
+    .match--timestamp {
+      width: 80px;
+      font-weight: bold;
+      line-height: 1.2;
+
+      p {
+        color: var(--col-match-list-text-cream);
+        font-size: 1.2rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 425px) {
+
+  .matches--container {
+    .matches--card{
+      .match--type {
+        p {
+          font-size: 1.4rem;
+        }
+        span {
+          font-size: 0.8rem;
+        }
+      }
+    }
+  }
+
+
+    .player--info {
+      display: none;
+    }
+
+    .match--timestamp {
+      font-size: 1.4rem;
+
+      p {
+        font-size: 1rem;
+      }
+    }
+}
