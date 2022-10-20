@@ -16,7 +16,7 @@
 
                     <p>Killer : {{ kill.killerId }}</p>
                     <p>Victim : {{kill.victimId }}</p>
-                    <p>At time : {{ kill.timestamp }}</p>
+                    <p>At time : {{ kill.timestamp | convertMsToMinutesSeconds }}</p>
                     <p>Position : X => {{ kill.position.x }}, Y => {{ kill.position.y }}</p>
 
                 </div>
