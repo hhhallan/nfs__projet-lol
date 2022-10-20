@@ -3,8 +3,6 @@
 namespace App\Services;
 
 use App\Repository\GameRepository;
-use App\Repository\ChampionRepository;
-use App\Repository\SummonerRepository;
 use App\Repository\GameTimelineRepository;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -32,11 +30,6 @@ class MatchesService
     private FormatService $formatServices;
 
     /**
-     * @var SummonerRepository $summonerRepo
-     */
-    private SummonerRepository $summonerRepo;
-
-    /**
      * @var GameRepository $gameRepo
      */
     private GameRepository $gameRepo;
@@ -46,30 +39,28 @@ class MatchesService
      */
     private GameTimelineRepository $gameTimelineRepo;
     
-    /**
-     * @var ChampionRepository $championRepo
-     */
-    private ChampionRepository $championRepo;
+
 
     public function __construct(
         ParameterBagInterface $parameterBag,
         HttpClientInterface $client,
         FormatService $formatServices,
-        SummonerRepository $summonerRepo,
         GameRepository $gameRepo,
-        GameTimelineRepository $gameTimelineRepo,
-        ChampionRepository $championRepo
+        GameTimelineRepository $gameTimelineRepo
     ) {
         $this->parameterBag     = $parameterBag;
         $this->apiKey           = $this->parameterBag->get('api_key');
         $this->client           = $client;
         $this->formatServices   = $formatServices;
-        $this->summonerRepo     = $summonerRepo;
         $this->gameRepo         = $gameRepo;
         $this->gameTimelineRepo = $gameTimelineRepo;
-        $this->championRepo     = $championRepo;
     }
 
+    /**
+     * Fetch summoner by summoner name
+     * @param string $name
+     * @return array
+     */
     public function getSummonerByName(string $name): array
     {
         $summoners = $this->client->request(
@@ -79,43 +70,51 @@ class MatchesService
         return json_decode($summoners->getContent(), true);
     }
 
-    public function getGamesByPuuid(string $puuid)
+    /**
+     * Fetch a last matches id
+     * @param $puuid
+     * @return array
+     */
+    private function getLastMatchesId(string $puuid): array
     {
-        $lastMatchesIds = $this->client->request(
+        $response = $this->client->request(
             'GET',
             'https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/' . $puuid . '/ids?start=0&count=20&api_key=' . $this->apiKey
         );
-        $lastMatchesIdsResponse = json_decode($lastMatchesIds->getContent(), true);
+        return json_decode($response->getContent(), true);
+    }
 
-        if (!$lastMatchesIdsResponse) {
-            throw new \Exception('Une erreur est survenue pendant la récupération des matches');
-        }
-
+    /**
+     * Fetch a last 8 CLASSIC matches by summoner puuid
+     * @param string $puuid
+     * @return array
+     */
+    public function getGamesByPuuid(string $puuid): array
+    {
+        $lastMatchesIdsResponse = $this->getLastMatchesId($puuid);
         $games = [];
-
         for ($k = 0; $k < (sizeof($lastMatchesIdsResponse) == 20 ? 8 : sizeof($lastMatchesIdsResponse)); $k++) { 
-            $tmpResp[$k] = json_decode($this->client->request('GET', 'https://europe.api.riotgames.com/lol/match/v5/matches/' . $lastMatchesIdsResponse[$k] . '?api_key=' . $this->apiKey)->getContent(), true);
-            if (isset($tmpResp[$k]['info']['gameMode']) && $tmpResp[$k]['info']['gameMode'] === 'CLASSIC') {
-                $games[] = $tmpResp[$k];
+            $tmpResponse[$k] = json_decode($this->client->request('GET', 'https://europe.api.riotgames.com/lol/match/v5/matches/' . $lastMatchesIdsResponse[$k] . '?api_key=' . $this->apiKey)->getContent(), true);
+            if (isset($tmpResponse[$k]['info']['gameMode']) && $tmpResponse[$k]['info']['gameMode'] === 'CLASSIC') {
+                $games[] = $tmpResponse[$k];
             }
         }
-
         $formattedGames = [];
-        
         for ($j= 0; $j < sizeof($games); $j++) { 
             $formattedGames[$j] = $this->formatServices->formatMatch($games[$j]);
         }
-
         return $formattedGames;
     }
 
+    /**
+     * Fetch all matches
+     * @return array
+     */
     public function getGames(): array
     {
         $games = $this->gameRepo->findAll();
         $gamesTimeline = $this->gameTimelineRepo->findAll();
-
         $formattedGames = [];
-
         for ($k = 0; $k < sizeof($games); $k++) { 
             $formattedGames[$k] = $this->formatServices->formatMatch($games[$k]->getContent());
             $formattedGames[$k]['kills'] = $this->formatServices->formatMatchTimeline($gamesTimeline[$k]->getContent(), []);
@@ -123,16 +122,17 @@ class MatchesService
         return $formattedGames;
     }
 
+    /**
+     * Fetch match and match timeline by match id and return formatted array
+     * @param string $matchId
+     * @return array
+     */
     public function getGameById(string $matchId): array
     {
-        // $game = $this->gameRepo->findOneBy(['matchId' => $matchId]);
         $game = json_decode($this->client->request('GET', 'https://europe.api.riotgames.com/lol/match/v5/matches/' . $matchId . '?api_key=' . $this->apiKey)->getContent(), true);
-        // $gameTimeline = $this->gameTimelineRepo->findOneBy(['matchId' => $matchId]);
         $gameTimeline = json_decode($this->client->request('GET', 'https://europe.api.riotgames.com/lol/match/v5/matches/' . $matchId . '/timeline?api_key=' . $this->apiKey)->getContent(), true);
-
         $formattedGame = $this->formatServices->formatMatch($game);
         $formattedGame['kills'] = $this->formatServices->formatMatchTimeline($gameTimeline, []);
-
         return $formattedGame;
     }
 }

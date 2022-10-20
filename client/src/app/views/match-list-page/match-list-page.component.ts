@@ -10,12 +10,14 @@ import { GameService } from 'src/app/shared/services/game.service';
 })
 export class MatchListPageComponent implements OnInit {
   matches: Match[] = [];
+  summonerImages: string[] = [];
   isLoaded: Promise<boolean> = Promise.resolve(false);
 
   constructor(private gameService: GameService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     const puuid: string = this.route.snapshot.params['puuid'];
+    this.matches = [];
     this.initMatches(puuid);
   }
 
@@ -23,6 +25,13 @@ export class MatchListPageComponent implements OnInit {
     this.gameService.getGamesByPuid(puuid).subscribe();
     this.gameService.matches$.subscribe((matches) => {
       this.matches = matches;
+      matches.forEach(el => {
+        el.participants.forEach(e => {
+          if (e.puuid === puuid) {
+            this.summonerImages.push(e.image);
+          } 
+        });
+      });
       this.isLoaded = Promise.resolve(true);
     });
   }

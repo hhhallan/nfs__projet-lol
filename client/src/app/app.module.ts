@@ -14,6 +14,7 @@ import {CommonModule} from "@angular/common";
 import { MatchListPageComponent } from './views/match-list-page/match-list-page.component';
 import { MatchDetailPageComponent } from './views/match-detail-page/match-detail-page.component';
 import { ConvertMsToMinutesSecondsPipe } from './shared/services/convert-ms-to-minutes-seconds.pipe';
+import { ConvertSecondsToMinutesSecondsPipe } from './shared/services/convert-seconds-to-minutes-seconds.pipe';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ConvertMsToMinutesSecondsPipe } from './shared/services/convert-ms-to-m
     LoadingScreenComponent,
     MatchListPageComponent,
     MatchDetailPageComponent,
-    ConvertMsToMinutesSecondsPipe
+    ConvertMsToMinutesSecondsPipe,
+    ConvertSecondsToMinutesSecondsPipe
   ],
   imports: [
     BrowserModule,

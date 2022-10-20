@@ -32,10 +32,7 @@ export class HomePageComponent implements OnInit {
           if (Object.keys(summoner)[0] !== 'status_code') {
             if (summoner) {
               this.summoner = summoner;
-              this.link = '/matches/' + summoner.puuid;
-              console.log(this.summoner);
-              console.log(this.link);
-              
+              this.link = '/matches/' + summoner.puuid;      
               this.formatResult(this.result, summoner);
             }
           }

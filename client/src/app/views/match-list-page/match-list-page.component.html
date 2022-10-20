@@ -5,8 +5,12 @@
         <h1>Liste des matches</h1>
     
         <div *ngIf="matches.length; else elseMatches">
-            <div class="match-card" *ngFor="let match of matches">
-                <a [routerLink]="['/match/', match.matchId ]">{{ match.matchId }}</a>
+            <div class="match-card" *ngFor="let match of matches; let i = index;" >
+                <a [routerLink]="['/match/', match.matchId ]">
+                    <p>{{ match.matchId }}</p>
+                    <p>Durée : {{ match.gameDuration | convertSecondsToMinutesSeconds }}</p>
+                    <img src="{{ summonerImages[i] }}" alt="Icon du champion">
+                </a>
             </div>
         </div>
 
