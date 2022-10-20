@@ -1,34 +1,34 @@
 <div *ngIf="isLoaded | async; else elseBlock">
 
-    <div class="container">
+  <div class="container">
 
-        <h1>Détail du match {{ match.matchId }}</h1>
+    <h1>Détail du match {{ match.matchId }}</h1>
 
-        <div class="match-container">
-            
-            <app-map id="app-map" [match]="match"></app-map>
+    <div class="match-container">
 
-            <div class="match-detail-card">
+      <app-map id="app-map" [match]="match"></app-map>
 
-                <p></p>
+      <div class="match-detail-card">
 
-                <div class="kill-card" *ngFor="let kill of match.kills">
+        <p></p>
 
-                    <p>Killer : {{ kill.killerId }}</p>
-                    <p>Victim : {{kill.victimId }}</p>
-                    <p>At time : {{ kill.timestamp }}</p>
-                    <p>Position : X => {{ kill.position.x }}, Y => {{ kill.position.y }}</p>
+        <div class="kill-card" *ngFor="let kill of match.kills">
 
-                </div>
-
-            </div>
+          <p>Killer : {{ kill.killerId }}</p>
+          <p>Victim : {{kill.victimId }}</p>
+          <p>At time : {{ kill.timestamp }}</p>
+          <p>Position : X => {{ kill.position.x }}, Y => {{ kill.position.y }}</p>
 
         </div>
 
+      </div>
+
     </div>
-    
+
+  </div>
+
 </div>
 
 <ng-template #elseBlock>
-    <app-loading></app-loading>
+  <app-loading></app-loading>
 </ng-template>

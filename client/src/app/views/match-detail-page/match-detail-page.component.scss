@@ -1,46 +1,46 @@
 .container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+
+  p { line-height: 1.2rem; }
+
+  h1 { font-size: 1.4rem; font-weight: 600; margin-bottom: 20px; }
+
+  .match-container {
     width: 100%;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
+    justify-content: space-around;
+    max-height: 700px;
+    overflow: hidden;
 
-    p { line-height: 1.2rem; }
+    .match-detail-card {
+      width: 40%;
+      background-color: #C8C8C8;
+      padding: 20px;
+      overflow: auto;
 
-    h1 { font-size: 1.4rem; font-weight: 600; margin-bottom: 20px; }
-
-    .match-container {
-        width: 100%;
-        display: flex;
-        justify-content: space-around;
-        max-height: 700px;
-        overflow: hidden;
-
-        .match-detail-card {
-            width: 40%;
-            background-color: #C8C8C8;
-            padding: 20px;
-            overflow: auto;
-
-            .kill-card {
-                margin-bottom: 15px;
-            }
-        }
+      .kill-card {
+        margin-bottom: 15px;
+      }
     }
+  }
 }
 
 @media screen and (max-width: 570px) {
-    .match-container {
-        display: flex;
-        flex-direction: column;
+  .match-container {
+    display: flex;
+    flex-direction: column;
 
-        #app-map {
-            width: 100%!important;
-        }
-
-        .match-detail-card {
-            width: 100%!important;
-        }
+    #app-map {
+      width: 100%!important;
     }
+
+    .match-detail-card {
+      width: 100%!important;
+    }
+  }
 }
