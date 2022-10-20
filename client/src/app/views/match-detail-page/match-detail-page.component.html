@@ -1,30 +1,29 @@
 <div *ngIf="isLoaded | async; else elseBlock">
   <div class="container">
 
-    <h1>coucou</h1>
+    <h1>Match</h1>
 
     <div class="matches-container">
       <app-map id="app-map" [match]="match"></app-map>
 
       <div class="match--detail-container">
-
         <div class="kill-card" *ngFor="let kill of match.kills">
 
           <div class="match--type">
             <p>Type</p>
-            <span class="match--victory">Victory</span>
+            <span class="match--defeat">Ennemy</span>
           </div>
 
-          <div class="match--players">
+          <div class="match--player">
             <div>{{ kill.killerId }}</div> => <div>{{kill.victimId }}</div>
           </div>
 
           <div class="match--timestamp">
-            <p>Tué.e à <br> <span>{{ roundTimestamp(kill.timestamp) }}min</span> <br> de jeu</p>
+            <p>Tué.e à</p>
+            <span>{{ roundTimestamp(kill.timestamp) + "min" }}</span>
           </div>
 
         </div>
-
       </div>
     </div>
 
