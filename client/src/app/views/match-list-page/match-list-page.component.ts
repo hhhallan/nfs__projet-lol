@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Match } from 'src/app/core/model/Match';
 import { GameService } from 'src/app/shared/services/game.service';
 
@@ -11,14 +12,15 @@ export class MatchListPageComponent implements OnInit {
   matches: Match[] = [];
   isLoaded: Promise<boolean> = Promise.resolve(false);
 
-  constructor(private gameService: GameService) { }
+  constructor(private gameService: GameService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.initMatches();
+    const puuid: string = this.route.snapshot.params['puuid'];
+    this.initMatches(puuid);
   }
 
-  initMatches(): void {
-    this.gameService.getGames().subscribe();
+  initMatches(puuid: string): void {
+    this.gameService.getGamesByPuid(puuid).subscribe();
     this.gameService.matches$.subscribe((matches) => {
       this.matches = matches;
       this.isLoaded = Promise.resolve(true);

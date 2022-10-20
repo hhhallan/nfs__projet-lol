@@ -8,4 +8,5 @@ export interface Participant {
     puuid: string;
     teamId: number;
     participantId: number;
+    win: boolean;
 }
