@@ -43,8 +43,8 @@ table {
 	border-spacing: 0;
 }
 
-*, ::after, ::before {
-  margin: 0;
-  padding: 0;
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }

@@ -1,7 +1,7 @@
 import { Kill } from "./Kill";
 import { Participant } from "./Participant";
 
-export interface Match {
+export interface MatchDetails {
     matchId: string;
     gameMode: string;
     gameDuration: number;
@@ -9,4 +9,5 @@ export interface Match {
     totalAssists: number;
     totalDeaths: number;
     participants: Participant[];
+    kills: Kill[];
 }

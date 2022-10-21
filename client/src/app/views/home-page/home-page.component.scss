@@ -97,3 +97,15 @@
         border: none;
     }
 }
+
+#result {
+    cursor: pointer;
+    background-color: rgb(32 45 55);
+    color: rgb(201, 201, 201);
+    // border: #1c1c1f 1px inset;
+    &:hover {
+        transition: all .4s;
+        background-color: #28344e;
+    }
+}
+

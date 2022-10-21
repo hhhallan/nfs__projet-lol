@@ -9,17 +9,16 @@
         <div class="search_bar_contener">
             <form action="" method="get">
                 <div class="search_bar">
-                    <input type="text" id="player" name="player_pseudo" placeholder="Entrez un pseudo">
+                    <input type="text" id="search" name="player_pseudo" placeholder="Entrez un pseudo" (keyup)="getSummonerByName()">
                     <select name="region" id="region">
                         <option value="WE">WE</option>
                         <option value="USA">USA</option>
                     </select>
                 </div>
-                <div class="button">
-                    <button type="submit">Rechercher</button>
-                </div>
             </form>
+            <div [routerLink]="link" id="result"></div>
         </div>
         
     </div>
 </div>
+

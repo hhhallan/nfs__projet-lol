@@ -3,42 +3,61 @@ import { Injectable } from '@angular/core';
 import { map, Observable, ReplaySubject } from 'rxjs';
 import { Champion } from 'src/app/core/model/Champion';
 import { Match } from 'src/app/core/model/Match';
+import { MatchDetails } from 'src/app/core/model/MatchDetails';
+import { Summoner } from 'src/app/core/model/Summoner';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameService {
-  private matchSource = new ReplaySubject<Match>(1);
+  private summonersSource = new ReplaySubject<Summoner>(1);
+  private matchDetailsSource = new ReplaySubject<MatchDetails>(1);
   private matchesSource = new ReplaySubject<Match[]>(1);
   private championSource = new ReplaySubject<Champion>(1);
-  match$ = this.matchSource.asObservable();
+  summoner$ = this.summonersSource.asObservable();
+  match$ = this.matchDetailsSource.asObservable();
   matches$ = this.matchesSource.asObservable();
   champion$ = this.championSource.asObservable();
 
   constructor(private http: HttpClient) { }
 
   /**
-   * Fetch match details
-   * @param {string} id id of match => ex: EUW1_6082400874 
+   * Fetch summoner by his name
+   * @param {string} name 
    * @returns {Observable<void>}
    */
-  getGame(id: string): Observable<void>  {
-    return this.http.get<Match>(environment.baseUrl + '/api/get-game/' + id).pipe(
-      map((match: Match) => {
-        if (match) {
-          this.matchSource.next(match);
+  getSummonerByName(name: string): Observable<void> {
+    return this.http.get<Summoner>(environment.baseUrl + '/summoners/by-name/' + name).pipe(
+      map((summoner: Summoner) => {
+        if (summoner) {
+          this.summonersSource.next(summoner);
         }
       })
     );
   }
 
   /**
-   * Fetch all matches details
+   * Fetch match details
+   * @param {string} matchId id of match => ex: EUW1_6082400874 
    * @returns {Observable<void>}
    */
-  getGames(): Observable<void> {
-    return this.http.get<Match[]>(environment.baseUrl + '/api/get-games').pipe(
+  getGameByMatchId(matchId: string): Observable<void>  {
+    return this.http.get<MatchDetails>(environment.baseUrl + '/match/' + matchId).pipe(
+      map((match: MatchDetails) => {
+        if (match) {
+          this.matchDetailsSource.next(match);
+        }
+      })
+    );
+  }
+
+  /**
+   * Fetch last matches 
+   * @returns {Observable<void>}
+   */
+  getGamesByPuid(puuid: string): Observable<void> {
+    return this.http.get<Match[]>(environment.baseUrl + '/matches/by-puuid/' + puuid).pipe(
       map((matches: Match[]) => {
         if (matches) {
           this.matchesSource.next(matches);

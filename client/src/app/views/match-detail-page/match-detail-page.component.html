@@ -20,9 +20,8 @@
 
           <div class="match--timestamp">
             <p>Tué.e à</p>
-            <span>{{ roundTimestamp(kill.timestamp) + "min" }}</span>
+            <span>{{ kill.timestamp | convertMsToMinutesSeconds }}</span>
           </div>
-
         </div>
       </div>
     </div>

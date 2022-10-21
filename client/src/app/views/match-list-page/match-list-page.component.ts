@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Match } from 'src/app/core/model/Match';
 import { GameService } from 'src/app/shared/services/game.service';
 
@@ -9,24 +10,37 @@ import { GameService } from 'src/app/shared/services/game.service';
 })
 export class MatchListPageComponent implements OnInit {
   matches: Match[] = [];
+  summonerImages: string[] = [];
+  hasWin: boolean[] = [];
+  kills: number[] = [];
+  assists: number[] = [];
+  deaths: number[] = [];
   isLoaded: Promise<boolean> = Promise.resolve(false);
 
-  constructor(private gameService: GameService) { }
+  constructor(private gameService: GameService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.initMatches();
+    const puuid: string = this.route.snapshot.params['puuid'];
+    this.matches = [];
+    this.initMatches(puuid);
   }
 
-  initMatches(): void {
-    this.gameService.getGames().subscribe();
+  initMatches(puuid: string): void {
+    this.gameService.getGamesByPuid(puuid).subscribe();
     this.gameService.matches$.subscribe((matches) => {
       this.matches = matches;
+      matches.forEach(el => {
+        el.participants.forEach(e => {
+          if (e.puuid === puuid) {
+            this.summonerImages.push(e.image);
+            this.hasWin.push(e.win);
+            this.kills.push(e.kills);
+            this.assists.push(e.assists);
+            this.deaths.push(e.deaths);
+          } 
+        });
+      });
       this.isLoaded = Promise.resolve(true);
-      console.log(this.matches)
     });
-  }
-
-  roundTimestamp(timestamp: number): number {
-    return Math.round((timestamp / 60) * 100) / 100;
   }
 }
