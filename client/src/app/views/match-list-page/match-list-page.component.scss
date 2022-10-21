@@ -20,20 +20,22 @@
 
 
   // Liste des matchs
+  .match--victory { background: linear-gradient(0.25turn, var(--col-match-list-bg-dark), var(--col-match-list-bg-light)); }
+  .match--defeat { background-color: lime; }
   .matches--card {
     display: flex;
     align-items: center;
     justify-content: space-between;
     height: 80px;
     border-bottom: 2px solid var(--col-match-list-border);
-    background: linear-gradient(0.25turn, var(--col-match-list-bg-dark), var(--col-match-list-bg-light));
+    // background: linear-gradient(0.25turn, var(--col-match-list-bg-dark), var(--col-match-list-bg-light));
     color: white;
     padding: 1rem 3.5%;
     cursor: pointer;
 
-    &:nth-child(even) {
-      background: linear-gradient(0.25turn, var(--col-match-list-bg-light), var(--col-match-list-bg-dark));
-    }
+    // &:nth-child(even) {
+    //   background: linear-gradient(0.25turn, var(--col-match-list-bg-light), var(--col-match-list-bg-dark));
+    // }
 
     &:hover {
       filter: brightness(0.8);
@@ -54,7 +56,7 @@
           color: var(--col-match-list-victory);
         }
 
-        &.match--defeat {
+        &.match--match--victory {
           color: var(--col-match-list-defeat);
         }
       }
