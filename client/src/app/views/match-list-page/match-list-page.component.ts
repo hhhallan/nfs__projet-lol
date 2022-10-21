@@ -11,6 +11,7 @@ import { GameService } from 'src/app/shared/services/game.service';
 export class MatchListPageComponent implements OnInit {
   matches: Match[] = [];
   summonerImages: string[] = [];
+  hasWin: boolean[] = [];
   isLoaded: Promise<boolean> = Promise.resolve(false);
 
   constructor(private gameService: GameService, private route: ActivatedRoute) { }
@@ -29,6 +30,7 @@ export class MatchListPageComponent implements OnInit {
         el.participants.forEach(e => {
           if (e.puuid === puuid) {
             this.summonerImages.push(e.image);
+            this.hasWin.push(e.win);
           } 
         });
       });

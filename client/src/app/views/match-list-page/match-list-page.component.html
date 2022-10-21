@@ -5,7 +5,7 @@
         <h1>Liste des matches</h1>
     
         <div *ngIf="matches.length; else elseMatches">
-            <div class="match-card" *ngFor="let match of matches; let i = index;" >
+            <div class="match-card" *ngFor="let match of matches; let i = index;" [ngClass]="{'hasWin': hasWin[i], 'hasLose': !hasWin[i]}">
                 <a [routerLink]="['/match/', match.matchId ]">
                     <p>{{ match.matchId }}</p>
                     <p>Durée : {{ match.gameDuration | convertSecondsToMinutesSeconds }}</p>
