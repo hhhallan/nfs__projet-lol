@@ -39,8 +39,6 @@ class MatchesService
      */
     private GameTimelineRepository $gameTimelineRepo;
     
-
-
     public function __construct(
         ParameterBagInterface $parameterBag,
         HttpClientInterface $client,

@@ -10,7 +10,7 @@ import { MapService } from 'src/app/shared/services/map.service';
   styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit, AfterViewInit {
-  @ViewChild('map') map: ElementRef | undefined;
+  @ViewChild('map') map: ElementRef = <ElementRef>{};
   @Input() match: MatchDetails = <MatchDetails>{};
 
   private ctx!: CanvasRenderingContext2D | null;
@@ -24,7 +24,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.ctx = (this.map!.nativeElement as HTMLCanvasElement).getContext('2d');
+    this.ctx = (this.map.nativeElement as HTMLCanvasElement).getContext('2d');
 
     this.displayTurrets();
     this.displayNeutralMobs();
@@ -83,3 +83,5 @@ export class MapComponent implements OnInit, AfterViewInit {
     });
   }
 }
+
+//=============>>><<<==============//
