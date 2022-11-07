@@ -41,44 +41,70 @@
 
     .search_bar{
         margin: 0 auto;
-        padding: 0 15px;
+        padding: 0 10px 0 15px;
         background-color: var(--blue1);
+        opacity: 0.8;
         box-shadow: 0px 0px 4px var(--blue2);
-        border-radius: 30px;
-        height: 50px;
+        border-radius: 100px;
+        height: 66px;
         width: 80vw;
         max-width: 800px;
         display: flex;
         justify-content: space-between;
         align-items: center;
 
-        input{
+        h5{
+            margin-bottom: 6px;
+        }
+
+        .spacer{
+            text-align: left;
+            @extend .main_page;
+            width:55%;
+            border: none;
+            border-left: solid;
+            border-color: var(--gold3);
+            margin: 0 0 0 5px;
+            padding: 0 5px
+        }
+
+        #search{
             @extend .main_page;
             background: none;
             outline: none;
             border: none;
-            height: 100%;
-            text-align: left
+            padding: 0px;
+            text-align: left;
+            width: 100%;
         }
     
+        .search_flex1{
+            @extend .main_page;
+            text-align: left;
+            width: 30%;
+        }
+
         select{
             @extend .main_page;
-            margin-left: 3px;
+            text-align: left;
             -webkit-appearance: none;       
             -moz-appearance: none;    
             appearance: none;  
             cursor: pointer;
-            padding-left: 6px;
             border: none;
-            border-left: solid;
-            height: 60%;
             outline: none;
             background: transparent;
             background-color: rgba(0, 0, 0, 0);
+            width: 100%;
+            color: gray;
 
             option{
                 background-color: var(--blue1);
             }
+        }
+
+        .home_page_logo{
+            width: 50px;
         }
     }
 
