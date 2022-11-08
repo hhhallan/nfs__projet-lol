@@ -1,16 +1,55 @@
 // !! Faire attention à l'ordre des imports !!
-
-// utils
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 @import "./assets/css/utils/fonts";
-@import "./assets/css/utils/variables/colors";
-@import "./assets/css/utils/variables/texts";
+
+// Variables
+:root {
+
+  // Colors
+    --col--bg-primary: #01384368;
+
+    --text: #fff;
+
+    --gold1: #7A6439;
+    --gold2: #97783F;
+    --gold3: #D6B46E;
+
+    --blue1: #013843;
+    --blue2: #0A706F;
+    --blue3: #1AA7B0;
+
+    --col-match-list-bg-dark: #0d2f4f;
+    --col-match-list-bg-light: #093458;
+    --col-match-list-border: #061A2A;
+    --col-match-list-victory: #63F397;
+    --col-match-list-defeat: #E4485D;
+    --col-match-list-text-cream: #BCB196;
+
+
+  // Text - size
+  --size: 1.6rem;
+
+  // Text - weight
+  --thin: 100;
+  --extra-light: 200;
+  --light: 300;
+  --regular: 400;
+  --medium: 500;
+  --semi-bold: 600;
+  --bold: 700;
+  --extra-bold: 800;
+  --black: 900;
+}
+
 @import "./assets/css/utils/reset";
 
+// STYLE
+html {
+  font-size: 62.5%;
+}
+
 body {
-    background-color: #fff;
-    color: #111;
-    font-family: 'Inter', sans-serif;
-    font-size: 16px;
-    font-weight: 400;
+  background-color: #fff;
+  color: #111;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.6rem;
 }

@@ -1,6 +1,7 @@
 export interface Participant {
     championId: number;
     championName: string;
+    image: string;
     kills: number;
     deaths: number;
     assists: number;
@@ -8,4 +9,5 @@ export interface Participant {
     puuid: string;
     teamId: number;
     participantId: number;
+    win: boolean;
 }

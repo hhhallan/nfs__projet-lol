@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Kill } from 'src/app/core/model/Kill';
-import { Match } from 'src/app/core/model/Match';
+import { MatchDetails } from 'src/app/core/model/MatchDetails';
 import { turrets } from 'src/app/shared/data/turrets';
 import { MapService } from 'src/app/shared/services/map.service';
 
@@ -10,8 +10,8 @@ import { MapService } from 'src/app/shared/services/map.service';
   styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit, AfterViewInit {
-  @ViewChild('map') map: ElementRef | undefined;
-  @Input() match: Match = <Match>{};
+  @ViewChild('map') map: ElementRef = <ElementRef>{};
+  @Input() match: MatchDetails = <MatchDetails>{};
 
   private ctx!: CanvasRenderingContext2D | null;
   turrets = turrets;
@@ -24,7 +24,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.ctx = (this.map!.nativeElement as HTMLCanvasElement).getContext('2d');
+    this.ctx = (this.map.nativeElement as HTMLCanvasElement).getContext('2d');
 
     this.displayTurrets();
     this.displayNeutralMobs();
@@ -83,3 +83,5 @@ export class MapComponent implements OnInit, AfterViewInit {
     });
   }
 }
+
+//=============>>><<<==============//

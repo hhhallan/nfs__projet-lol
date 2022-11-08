@@ -1,15 +1,42 @@
 <div *ngIf="isLoaded | async; else elseBlock">
 
-    <div class="container">
+  <div class="container">
 
-        <h1>Liste des matches</h1>
-    
-        <div class="match-card" *ngFor="let match of matches">
-            <a [routerLink]="['/match/', match.matchId ]">{{ match.matchId }}</a>
+    <h1>Liste des matches</h1>
+
+    <div class="matches--container" *ngIf="matches.length; else elseMatches">
+
+      <div class="matches--card" *ngFor="let match of matches; let i = index;" [routerLink]="['/match/', match.matchId]" [ngClass]="{'match--victory': hasWin[i], 'match--defeat': !hasWin[i]}">
+
+        <div class="match--type">
+          <p>{{ match.gameMode }}</p>
+          <span>{{ hasWin[i] ? 'Victoire' : 'Défaite' }}</span>
         </div>
 
+        <div class="match--player">
+          <div>
+            <img src="{{ summonerImages[i] }}" alt="Icone du champion">
+          </div>
+          <div class="player--info">
+            {{ kills[i] }} / {{ assists[i] }} / {{ deaths[i] }}
+          </div>
+        </div>
+
+        <div class="match--timestamp">
+          <p>Durée</p>
+          <span>{{ match.gameDuration | convertSecondsToMinutesSeconds }}</span>
+        </div>
+
+      </div>
+
     </div>
-    
+
+    <ng-template #elseMatches>
+        <h1 class="not-found" [routerLink]="['/']">Aucun matches joué récemment <br> Retour à la page d'accueil</h1>
+    </ng-template>
+
+  </div>
+
 </div>
 
 <ng-template #elseBlock>
