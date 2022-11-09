@@ -5,4 +5,6 @@ export interface Kill {
     position: Position;
     timestamp: number;
     victimId: number;
+    killerImage: string;
+    victimImage: string;
 }

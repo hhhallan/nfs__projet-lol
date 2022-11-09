@@ -16,6 +16,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   private ctx!: CanvasRenderingContext2D | null;
   turrets = turrets;
   kills: Kill[] = [];
+  rangeEl: HTMLInputElement | null = null;
 
   constructor(private mapService: MapService) { }
 
@@ -28,7 +29,8 @@ export class MapComponent implements OnInit, AfterViewInit {
 
     this.displayTurrets();
     this.displayNeutralMobs();
-    this.displayKills(this.kills);
+    // this.displayKills(this.kills);
+    this.d(this.kills, this.match.gameDuration);
   }
 
   /**
@@ -82,6 +84,99 @@ export class MapComponent implements OnInit, AfterViewInit {
       this.ctx!.fill();
     });
   }
+
+  //=============>>><<<==============//
+
+  int(c: number) {
+    setInterval(() => {
+      console.log(c);
+      c++
+    }, 1000)
+  }
+
+  i(c: number) {
+    console.log(c);
+  }
+
+  d(kills: Kill[], gameDuration: number): void {
+    let c = 220;
+    const it = setInterval(() => {
+      // console.log(c);
+      if (c !== gameDuration) {
+
+        for (let i = 0; i < kills.length; i++) {
+          if (Math.round(kills[i].timestamp / 1000) === c) {
+            if (i > 0) {
+              if (Math.round(kills[i].timestamp / 1000) - Math.round(kills[i - 1].timestamp / 1000) === 1) {
+                if (true) {
+
+                }
+                console.log(kills[i])
+              }
+            }
+
+          }
+        }
+
+        kills.forEach(el => {
+          
+          if (Math.round(el.timestamp / 1000) === c) {
+            const img = new Image();
+            img.src = el.victimImage;
+            img.onload = () => {
+              // this.ctx!.fillStyle = "black";
+              this.ctx!.beginPath();
+              // this.ctx!.arc(this.mapService.toX(el.position.x), this.mapService.toY(el.position.y), 10, 0, 2 * Math.PI);
+              this.ctx!.drawImage(img, this.mapService.toX(el.position.x), this.mapService.toY(el.position.y), 40, 40)
+              this.ctx!.fill();
+              setTimeout(() => {
+                this.ctx!.clearRect(this.mapService.toX(el.position.x), this.mapService.toY(el.position.y), 40, 40);
+              }, 1000);
+            }
+          }
+        });
+        c++
+      } else {
+        clearInterval(it);
+      }
+    }, 1000)
+ 
+
+   
+      
+
+      
+   
+
+  }
+
+  // d(kills: Kill[], gameDuration: number):void {
+  //   this.rangeEl = <HTMLInputElement>document.getElementById('rangeEl');
+  //   if (this.rangeEl !== null) {
+  //     this.rangeEl.min = "0";
+  //     this.rangeEl.max = gameDuration.toString();
+  //     this.rangeEl.step = (1 / 60).toString();
+  //     this.rangeEl.value = "0";
+
+  //     this.rangeEl.addEventListener('change', () => {
+  //       console.log(this.rangeEl?.value);
+  //     });
+
+      
+  //   }
+  //   // console.log(kills);
+  //   // console.log(gameDuration);
+  // }
+
+
+  //=============>>><<<==============//
 }
 
+
 //=============>>><<<==============//
+
+export interface Point {
+  x: number;
+  y: number;
+  t: number;
+}

@@ -85,6 +85,8 @@ class FormatService {
                             if (!in_array($k1, $expectedKeys)) {
                                 unset($newArray[$k][$k1]);
                             }
+                            $newArray[$k]['killerImage'] = $this->championRepo->findOneBy(['championId' => $v['killerId']])->getImage();;
+                            $newArray[$k]['victimImage'] = $this->championRepo->findOneBy(['championId' => $v['victimId']])->getImage();;
                         }
                     }
                 }
