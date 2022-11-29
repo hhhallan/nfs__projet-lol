@@ -24,7 +24,6 @@ export class MatchDetailPageComponent implements OnInit {
     this.gameService.match$.subscribe((match) => {
       this.match = match;
       this.isLoaded = Promise.resolve(true);
-      // console.log(this.match);
     });
   }
 }

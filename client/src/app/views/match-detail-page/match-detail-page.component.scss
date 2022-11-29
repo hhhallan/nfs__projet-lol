@@ -23,6 +23,11 @@
   overflow: hidden;
   border-radius: 10px;
 
+  #app-map {
+    width: 100%;
+    padding-right: 15px;
+  }
+
   .match--detail-container {
     background-color: #C8C8C8;
     overflow: auto;
