@@ -115,7 +115,7 @@ class MatchesService
         $formattedGames = [];
         for ($k = 0; $k < sizeof($games); $k++) { 
             $formattedGames[$k] = $this->formatServices->formatMatch($games[$k]->getContent());
-            $formattedGames[$k]['kills'] = $this->formatServices->formatMatchTimeline($gamesTimeline[$k]->getContent(), []);
+            $formattedGames[$k]['kills'] = $this->formatServices->formatMatchTimeline($gamesTimeline[$k]->getContent(), $formattedGames[$k]['participants'], []);
         }
         return $formattedGames;
     }
@@ -130,7 +130,7 @@ class MatchesService
         $game = json_decode($this->client->request('GET', 'https://europe.api.riotgames.com/lol/match/v5/matches/' . $matchId . '?api_key=' . $this->apiKey)->getContent(), true);
         $gameTimeline = json_decode($this->client->request('GET', 'https://europe.api.riotgames.com/lol/match/v5/matches/' . $matchId . '/timeline?api_key=' . $this->apiKey)->getContent(), true);
         $formattedGame = $this->formatServices->formatMatch($game);
-        $formattedGame['kills'] = $this->formatServices->formatMatchTimeline($gameTimeline, []);
+        $formattedGame['kills'] = $this->formatServices->formatMatchTimeline($gameTimeline, $formattedGame['participants'], []);
         return $formattedGame;
     }
 }

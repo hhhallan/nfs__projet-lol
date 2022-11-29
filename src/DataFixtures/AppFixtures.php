@@ -13,8 +13,14 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class AppFixtures extends Fixture
 {
+    /**
+     * @var ParameterBagInterface
+     */
     private ParameterBagInterface $parameterBag;
 
+    /**
+     * @var HttpClientInterface
+     */
     private HttpClientInterface $client;
 
     public function __construct(
@@ -28,16 +34,15 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $apiKey = $this->parameterBag->get('api_key');
-        
-        $summonerName = $this->parameterBag->get('summoner_name');
+        $championsVersion = $this->parameterBag->get('champions_version');
 
         // Champions
 
-        $championsResp = $this->client->request('GET', 'https://ddragon.leagueoflegends.com/cdn/12.18.1/data/fr_FR/champion.json');
+        $championsResp = $this->client->request('GET', 'https://ddragon.leagueoflegends.com/cdn/' . $championsVersion . '/data/fr_FR/champion.json');
 
         $champions = json_decode($championsResp->getContent(), true);
 
-        $imgBaseUrl = 'https://ddragon.leagueoflegends.com/cdn/12.18.1/img/champion/';
+        $imgBaseUrl = 'https://ddragon.leagueoflegends.com/cdn/' . $championsVersion . '/img/champion/';
 
         foreach ($champions as $key => $value) {
             if ($key === 'data') {
@@ -74,7 +79,7 @@ class AppFixtures extends Fixture
 
             $manager->persist($summoner);
     
-            sleep(1);
+            usleep(500);
 
             // \>
 
@@ -86,7 +91,7 @@ class AppFixtures extends Fixture
     
             $lastMatches = json_decode($getMatchByPuuidResp->getContent(), true);
     
-            sleep(1);
+            usleep(500);
 
             // \>
 
@@ -103,7 +108,7 @@ class AppFixtures extends Fixture
 
                 $manager->persist($game);
     
-                sleep(1);
+                usleep(500);
     
                 $getMatchTimelineByIdUrl = 'https://europe.api.riotgames.com/lol/match/v5/matches/' . $lastMatches[$k] . '/timeline?api_key=' . $apiKey;
                 
@@ -115,7 +120,7 @@ class AppFixtures extends Fixture
 
                 $manager->persist($gameTimeline);
 
-                sleep(1);
+                usleep(500);
             }
 
             // \>

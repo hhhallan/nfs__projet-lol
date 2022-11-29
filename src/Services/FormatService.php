@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repository\ChampionRepository;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class FormatService {
     /**
@@ -10,9 +11,23 @@ class FormatService {
      */
     private ChampionRepository $championRepo;
 
-    public function __construct(ChampionRepository $championRepo)
+    /**
+     * @var ParameterBagInterface
+     */
+    private ParameterBagInterface $parameterBag;
+
+    /**
+     * @var string
+     */
+    private string $defaultImage = 'https://upload.wikimedia.org/wikipedia/commons/5/56/Donald_Trump_official_portrait.jpg';
+
+    public function __construct(
+        ChampionRepository $championRepo,
+        ParameterBagInterface $parameterBag
+    )
     {
         $this->championRepo = $championRepo;
+        $this->parameterBag = $parameterBag;
     }
 
     /**
@@ -54,7 +69,7 @@ class FormatService {
                     if ($key2 === 'participants') {
                         foreach ($value2 as $key3 => $value3) {
                             $formattedGame['participants'][$key3] = $this->formatArray(['championId', 'championName', 'kills', 'deaths', 'assists', 'lane', 'puuid', 'teamId', 'participantId', 'win'], $value3);
-                            $formattedGame['participants'][$key3]['image'] = $this->championRepo->findOneBy(['championId' => $value3['championId']])->getImage();
+                            $formattedGame['participants'][$key3]['image'] = $this->championRepo->findOneBy(['championId' => $value3['championId']]) !== null ? $this->championRepo->findOneBy(['championId' => $value3['championId']])->getImage() : $this->defaultImage;
                             $formattedGame['totalKills'] += intval($value3['kills']);
                             $formattedGame['totalAssists'] += intval($value3['assists']);
                             $formattedGame['totalDeaths'] += intval($value3['deaths']);
@@ -67,16 +82,34 @@ class FormatService {
     }
 
     /**
+     * Get image of participant champion by his id
+     * @param array $participants 
+     * @param int $participantId 
+     * @return mixed 
+     */
+    private function getImageByParticipantId(array $participants, int $participantId) {
+        foreach ($participants as $key => $value) {
+            foreach ($value as $key1 => $value1) {
+                if ($key1 === 'participantId') {
+                    if ($value1 === $participantId) {
+                        return $value['image'];
+                    }
+                }
+            }
+        }
+    }
+
+    /**
      * Format match timeline
      * @param array $array
      * @param array $newArray
      * @return array
      */
-    public function formatMatchTimeline(array $array, array $newArray): array {
+    public function formatMatchTimeline(array $array, array $participants, array $newArray): array {
         $expectedKeys = ['killerId', 'position', 'victimId', 'timestamp'];
         foreach ($array as $key => $value) {
             if (is_array($value)) {
-                $newArray = $this->formatMatchTimeline($value, $newArray);
+                $newArray = $this->formatMatchTimeline($value, $participants, $newArray);
             } else {
                 if ($value === 'CHAMPION_KILL') {
                     $newArray[] = $array;
@@ -85,8 +118,9 @@ class FormatService {
                             if (!in_array($k1, $expectedKeys)) {
                                 unset($newArray[$k][$k1]);
                             }
-                            $newArray[$k]['killerImage'] = $this->championRepo->findOneBy(['championId' => $v['killerId']])->getImage();;
-                            $newArray[$k]['victimImage'] = $this->championRepo->findOneBy(['championId' => $v['victimId']])->getImage();;
+                            // dd($participants);
+                            $newArray[$k]['killerImage'] = $this->getImageByParticipantId($participants, $v['killerId']) ?? $participants[0]['image'];
+                            $newArray[$k]['victimImage'] = $this->getImageByParticipantId($participants, $v['victimId']) ?? $participants[0]['image'];
                         }
                     }
                 }
