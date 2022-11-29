@@ -1,6 +1,7 @@
 .container {
   background-color: var(--col-match-list-border);
   padding: 80px 0;
+  min-height: 100vh;
 
   h1 {
     text-align: center;
@@ -8,6 +9,10 @@
     font-weight: bold;
     color: white;
     margin-bottom: 50px;
+
+    &.not-found {
+
+    }
   }
 }
 
@@ -20,22 +25,20 @@
 
 
   // Liste des matchs
-  .match--victory { background: linear-gradient(0.25turn, var(--col-match-list-bg-dark), var(--col-match-list-bg-light)); }
-  .match--defeat { background-color: lime; }
   .matches--card {
     display: flex;
     align-items: center;
     justify-content: space-between;
     height: 80px;
     border-bottom: 2px solid var(--col-match-list-border);
-    // background: linear-gradient(0.25turn, var(--col-match-list-bg-dark), var(--col-match-list-bg-light));
+    background: linear-gradient(0.25turn, var(--col-match-list-bg-dark), var(--col-match-list-bg-light));
     color: white;
     padding: 1rem 3.5%;
     cursor: pointer;
 
-    // &:nth-child(even) {
-    //   background: linear-gradient(0.25turn, var(--col-match-list-bg-light), var(--col-match-list-bg-dark));
-    // }
+    &:nth-child(even) {
+      background: linear-gradient(0.25turn, var(--col-match-list-bg-light), var(--col-match-list-bg-dark));
+    }
 
     &:hover {
       filter: brightness(0.8);
@@ -51,14 +54,6 @@
 
       span {
         font-size: 1rem;
-
-        &.match--victory {
-          color: var(--col-match-list-victory);
-        }
-
-        &.match--match--victory {
-          color: var(--col-match-list-defeat);
-        }
       }
     }
 
@@ -69,7 +64,6 @@
       max-width: 250px;
       min-width: 150px;
       width: 100%;
-      overflow: hidden;
       //margin: 0 20px;
 
       div:first-child {
@@ -77,7 +71,10 @@
         height: 60px;
         border-radius: 5px;
         background-color: #2dd36f;
-        img { width: 100%; }
+
+        img {
+          width: 100%;
+        }
       }
 
       .player--info {
@@ -95,17 +92,39 @@
         font-size: 1.2rem;
       }
     }
+
+
+    // VICTOIRE
+    &.match--victory {
+      background: linear-gradient(0.25turn, var(--col-match-list-bg-light) 20%, var(--col-match-list-victory) 80%);
+
+
+      .match--type span {
+        color: var(--col-match-list-victory);
+      }
+    }
+
+    // DéFAITE
+    &.match--defeat {
+      background: linear-gradient(0.25turn, var(--col-match-list-bg-light) 20%, var(--col-match-list-defeat) 80%);
+
+
+      .match--type span {
+        color: var(--col-match-list-defeat);
+      }
+    }
   }
 }
 
 @media screen and (max-width: 425px) {
 
   .matches--container {
-    .matches--card{
+    .matches--card {
       .match--type {
         p {
           font-size: 1.4rem;
         }
+
         span {
           font-size: 0.8rem;
         }
@@ -114,18 +133,19 @@
   }
 
 
-    .player--info {
-      display: none;
-    }
+  .player--info {
+    display: none;
+  }
 
-    .match--timestamp {
-      font-size: 1.4rem;
+  .match--timestamp {
+    font-size: 1.4rem;
 
-      p {
-        font-size: 1rem;
-      }
+    p {
+      font-size: 1rem;
     }
+  }
 }
-.match-card { margin-bottom: 20px; }
-.hasWin { background-color: blue; }
-.hasLose { background-color: red; }
+
+.match-card {
+  margin-bottom: 20px;
+}
