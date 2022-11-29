@@ -10,7 +10,7 @@
 
         <div class="match--type">
           <p>{{ match.gameMode }}</p>
-          <span class="match--victory">{{ hasWin[i] ? 'Victoire' : 'Défaite' }}</span>
+          <span>{{ hasWin[i] ? 'Victoire' : 'Défaite' }}</span>
         </div>
 
         <div class="match--player">
@@ -18,7 +18,7 @@
             <img src="{{ summonerImages[i] }}" alt="Icone du champion">
           </div>
           <div class="player--info">
-            {{ kills[i] }} / {{ assists[i] }} / {{ deaths[i] }}
+            {{ kills[i] }} / {{ deaths[i] }} / {{ assists[i] }}
           </div>
         </div>
 
@@ -28,11 +28,11 @@
         </div>
 
       </div>
-    
+
     </div>
-    
+
     <ng-template #elseMatches>
-        <p>Aucun matches joué récemment</p>
+      <h1 class="not-found" [routerLink]="['/']">Aucun matches joué récemment <br> Retour à la page d'accueil</h1>
     </ng-template>
 
   </div>
@@ -40,5 +40,5 @@
 </div>
 
 <ng-template #elseBlock>
-    <app-loading></app-loading>
+  <app-loading></app-loading>
 </ng-template>
