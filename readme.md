@@ -55,6 +55,24 @@ else use `php bin`
 
 ###### For API test (in project root) :
 
+Create `.env.test.local` file and past a content of `.env.test`
+
+###### Replace default values by your values like :
+
+- `DATABASE_URL` The information to connect to the database
+- `API_KEY` API Key from your Riot account
+- `CHAMPIONS_VERSION` Version of champions `exemple : 12.22.1`
+
+###### After this create your test database and load your fixtures :
+
+- `symfony console --env=test d:d:c`
+
+- `symfony console --env=test d:s:c`
+
+- `symfony console --env=test d:f:l --no-interaction`
+
+###### To run test
+
 - `php bin/phpunit`
 
 ###### For Angular unit test (in client folder) :
