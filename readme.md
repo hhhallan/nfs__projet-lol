@@ -55,6 +55,8 @@ else use `php bin`
 
 ###### For API test (in project root) :
 
+- `php bin/phpunit`
+
 ###### For Angular unit test (in client folder) :
 
 - `ng test`
