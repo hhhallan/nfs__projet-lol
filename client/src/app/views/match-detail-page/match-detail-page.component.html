@@ -15,11 +15,13 @@
           </div>
 
           <div class="match--player">
-            <div><img src="{{ kill.killerImage }}" alt=""></div> => <div><img src="{{kill.victimImage }}" alt=""></div>
+            <div><img src="{{ kill.killerImage }}" alt="Champion killer"></div>
+            <div class="kill--icon"><img src="../../../assets/img/kill.png" alt=""></div>
+            <div><img src="{{kill.victimImage }}" alt="Champion victim"></div>
           </div>
 
           <div class="match--timestamp">
-            <p>Tué.e à</p>
+            <p>Tué à</p>
             <span>{{ kill.timestamp | convertMsToMinutesSeconds }}</span>
           </div>
         </div>
