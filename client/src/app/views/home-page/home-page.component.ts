@@ -28,7 +28,7 @@ export class HomePageComponent implements OnInit {
   getSummonerByName(): void {
     if (this.input.value.length > 2) {
       this.gameService.getSummonerByName(this.input.value).subscribe();
-      this.gameService.summoner$.subscribe((summoner) => {
+      this.gameService.summoner$.subscribe((summoner: Summoner) => {
           this.removeChilds(this.result);
           if (Object.keys(summoner)[0] !== 'status_code') {
             if (summoner) {
