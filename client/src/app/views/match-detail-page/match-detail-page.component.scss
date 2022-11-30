@@ -167,6 +167,12 @@
   }
 }
 
+@media screen and (max-width: 460px) {
+  .match--detail-container{
+    margin-top: 130px !important;
+  }
+}
+
 @media screen and (max-width: 375px) {
   .match--detail-container{
     margin-top: 50px !important;
