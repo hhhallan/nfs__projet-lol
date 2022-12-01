@@ -174,6 +174,6 @@ export class MapComponent implements OnInit, AfterViewInit {
       } else {
         clearInterval(it);
       }
-    }, 1000)
+    }, 100)
   }
 }

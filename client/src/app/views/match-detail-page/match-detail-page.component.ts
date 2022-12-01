@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { MatchDetails } from 'src/app/core/model/MatchDetails';
 import { GameService } from 'src/app/shared/services/game.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-match-detail-page',
@@ -9,14 +11,20 @@ import { GameService } from 'src/app/shared/services/game.service';
   styleUrls: ['./match-detail-page.component.scss']
 })
 export class MatchDetailPageComponent implements OnInit {
+  title: string = environment.baseTitle + 'Détail du match';
   match: MatchDetails = <MatchDetails>{};
   playerHasWin: boolean = false;
   isTeamKill: boolean[] = [];
   isLoaded: Promise<boolean> = Promise.resolve(false);
 
-  constructor(private gameService: GameService, private route: ActivatedRoute) { }
+  constructor(
+    private titleService: Title,
+    private gameService: GameService, 
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
+    this.titleService.setTitle(this.title);
     const matchId: string = this.route.snapshot.params['matchId'];
     const puuid: string = this.route.snapshot.params['puuid'];
     this.initMatch(matchId, puuid);

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Summoner } from 'src/app/core/model/Summoner';
 import { GameService } from 'src/app/shared/services/game.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-home-page',
@@ -9,14 +11,19 @@ import { GameService } from 'src/app/shared/services/game.service';
 })
 
 export class HomePageComponent implements OnInit {
+  title: string = environment.baseTitle + 'Accueil';
   summoner: Summoner = <Summoner>{};
   input: HTMLInputElement = <HTMLInputElement>{};
   result: HTMLElement = <HTMLElement>{};
   link: string = '';
 
-  constructor(private gameService: GameService) { }
+  constructor(
+    private titleService: Title,
+    private gameService: GameService
+  ) { }
 
   ngOnInit(): void {
+    this.titleService.setTitle(this.title);
     this.input = <HTMLInputElement>document.getElementById('search');
     this.result = <HTMLElement>document.getElementById('result');
   }
