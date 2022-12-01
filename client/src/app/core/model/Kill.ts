@@ -7,4 +7,6 @@ export interface Kill {
     victimId: number;
     killerImage: string;
     victimImage: string;
+    killerSummonerName: string;
+    victimSummonerName: string;
 }

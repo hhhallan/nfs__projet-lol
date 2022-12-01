@@ -7,7 +7,7 @@ import { MatchListPageComponent } from './views/match-list-page/match-list-page.
 const routes: Routes = [
   {path: '', component: HomePageComponent},
   {path: 'matches/:puuid', component: MatchListPageComponent},
-  {path: 'match/:matchId', component: MatchDetailPageComponent},
+  {path: 'match/:matchId/:puuid', component: MatchDetailPageComponent},
 ];
 
 @NgModule({

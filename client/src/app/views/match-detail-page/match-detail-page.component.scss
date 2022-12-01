@@ -53,13 +53,18 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     border-bottom: 2px solid var(--col-match-list-border);
-    background: linear-gradient(0.25turn, var(--col-match-list-bg-dark), var(--col-match-list-bg-light));
     color: white;
     padding: 1rem 3.5%;
-
     cursor: pointer;
+
+    &.kill--team {
+      background: linear-gradient(0.25turn, var(--col-match-list-bg-dark), var(--col-match-list-bg-light));
+    }
+
+    &.isnot--kill--team {
+      background: linear-gradient(0.25turn, var(--col-match-list-defeat), var(--col-match-list-defeat));
+    }
 
 
     &:nth-child(even) {
@@ -70,20 +75,25 @@
       filter: brightness(0.8);
     }
 
-
     .match--type {
       font-weight: bold;
-      p {
-        font-size: 1.8rem;
-      }
-
+      display: flex;
+      flex-direction: column;
       span {
-        font-size: 1rem;
+        display: inline-block;
+        font-size: 1.3rem;
+        margin-bottom: 6px;
         &.match--victory {
-          color: green;
+          color: rgb(228, 227, 227);
+        }
+        &.match--common {
+          color: var(--col-match-list-text-cream);
         }
         &.match--defeat {
-          color: red;
+          color: rgb(211, 7, 7);
+        }
+        &:last-child {
+          margin: 0;
         }
       }
     }

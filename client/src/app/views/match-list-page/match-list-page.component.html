@@ -6,7 +6,7 @@
 
     <div class="matches--container" *ngIf="matches.length; else elseMatches">
 
-      <div class="matches--card" *ngFor="let match of matches; let i = index;" [routerLink]="['/match/', match.matchId]" [ngClass]="{'match--victory': hasWin[i], 'match--defeat': !hasWin[i]}">
+      <div class="matches--card" *ngFor="let match of matches; let i = index;" [routerLink]="['/match/', match.matchId, puuid]" [ngClass]="{'match--victory': hasWin[i], 'match--defeat': !hasWin[i]}">
 
         <div class="match--type">
           <p>{{ match.gameMode }}</p>

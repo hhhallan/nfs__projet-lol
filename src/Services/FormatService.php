@@ -68,7 +68,7 @@ class FormatService {
                 foreach ($value1 as $key2 => $value2) {
                     if ($key2 === 'participants') {
                         foreach ($value2 as $key3 => $value3) {
-                            $formattedGame['participants'][$key3] = $this->formatArray(['championId', 'championName', 'kills', 'deaths', 'assists', 'lane', 'puuid', 'teamId', 'participantId', 'win'], $value3);
+                            $formattedGame['participants'][$key3] = $this->formatArray(['championId', 'championName', 'kills', 'deaths', 'assists', 'lane', 'puuid', 'teamId', 'participantId', 'win', 'summonerName'], $value3);
                             $formattedGame['participants'][$key3]['image'] = $this->championRepo->findOneBy(['championId' => $value3['championId']]) !== null ? $this->championRepo->findOneBy(['championId' => $value3['championId']])->getImage() : $this->defaultImage;
                             $formattedGame['totalKills'] += intval($value3['kills']);
                             $formattedGame['totalAssists'] += intval($value3['assists']);
@@ -100,6 +100,24 @@ class FormatService {
     }
 
     /**
+     * Get summoner name of participant champion by his id
+     * @param array $participants 
+     * @param int $participantId 
+     * @return mixed 
+     */
+    private function getSummonerNameByParticipantId(array $participants, int $participantId) {
+        foreach ($participants as $key => $value) {
+            foreach ($value as $key1 => $value1) {
+                if ($key1 === 'participantId') {
+                    if ($value1 === $participantId) {
+                        return $value['summonerName'];
+                    }
+                }
+            }
+        }
+    }
+
+    /**
      * Format match timeline
      * @param array $array
      * @param array $newArray
@@ -120,6 +138,8 @@ class FormatService {
                             }
                             $newArray[$k]['killerImage'] = $this->getImageByParticipantId($participants, $v['killerId']) ?? $participants[0]['image'];
                             $newArray[$k]['victimImage'] = $this->getImageByParticipantId($participants, $v['victimId']) ?? $participants[0]['image'];
+                            $newArray[$k]['killerSummonerName'] = $this->getSummonerNameByParticipantId($participants, $v['killerId']) ?? $participants[0]['summonerName'];
+                            $newArray[$k]['victimSummonerName'] = $this->getSummonerNameByParticipantId($participants, $v['victimId']) ?? $participants[0]['summonerName'];
                         }
                     }
                 }

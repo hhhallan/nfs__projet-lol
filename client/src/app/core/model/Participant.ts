@@ -1,6 +1,7 @@
 export interface Participant {
     championId: number;
     championName: string;
+    summonerName: string;
     image: string;
     kills: number;
     deaths: number;

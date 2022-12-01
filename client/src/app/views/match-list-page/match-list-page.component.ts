@@ -16,11 +16,13 @@ export class MatchListPageComponent implements OnInit {
   assists: number[] = [];
   deaths: number[] = [];
   isLoaded: Promise<boolean> = Promise.resolve(false);
+  puuid: string = '';
 
   constructor(private gameService: GameService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     const puuid: string = this.route.snapshot.params['puuid'];
+    this.puuid = puuid;
     this.matches = [];
     this.initMatches(puuid);
   }

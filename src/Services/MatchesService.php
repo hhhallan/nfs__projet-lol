@@ -4,8 +4,13 @@ namespace App\Services;
 
 use App\Repository\GameRepository;
 use App\Repository\GameTimelineRepository;
+use Exception;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 
 class MatchesService
 {
@@ -66,6 +71,24 @@ class MatchesService
             'https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/' . $name . '?api_key=' . $this->apiKey
         );
         return json_decode($summoners->getContent(), true);
+    }
+
+    /**
+     * Fetch summoner name by puuid
+     * @param string $puuid 
+     * @return string 
+     * @throws TransportExceptionInterface 
+     * @throws RedirectionExceptionInterface 
+     * @throws ClientExceptionInterface 
+     * @throws ServerExceptionInterface 
+     * @throws Exception 
+     */
+    private function getSummonerNameByPuuid(string $puuid): string{
+        $summoner = json_decode($this->client->request('GET', 'https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/' . $puuid . '?api_key=' . $this->apiKey)->getContent(), true);
+        if (!$summoner) {
+            throw new Exception('Une erreur est survenue');
+        }
+        return $summoner['name'];
     }
 
     /**
@@ -130,6 +153,9 @@ class MatchesService
         $game = json_decode($this->client->request('GET', 'https://europe.api.riotgames.com/lol/match/v5/matches/' . $matchId . '?api_key=' . $this->apiKey)->getContent(), true);
         $gameTimeline = json_decode($this->client->request('GET', 'https://europe.api.riotgames.com/lol/match/v5/matches/' . $matchId . '/timeline?api_key=' . $this->apiKey)->getContent(), true);
         $formattedGame = $this->formatServices->formatMatch($game);
+        foreach ($formattedGame['participants'] as $key => $value) {
+            $formattedGame['participants'][$key]['summonerName'] = $this->getSummonerNameByPuuid($value['puuid']);
+        }
         $formattedGame['kills'] = $this->formatServices->formatMatchTimeline($gameTimeline, $formattedGame['participants'], []);
         return $formattedGame;
     }
