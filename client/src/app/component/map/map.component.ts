@@ -138,11 +138,11 @@ export class MapComponent implements OnInit, AfterViewInit {
       this.timer!.innerText = this.convertPipe.transform(c);
       if (c !== gameDuration) {
         for (let i = 0; i < kills.length; i++) {
-          if (Math.round(kills[i].timestamp / 1000) === c) {
+          // if (Math.round(kills[i].timestamp / 1000) === c) {
             if (i > 0) {
               const killTime: number = Math.round(kills[i].timestamp / 1000);
               const beforeKillTime: number = Math.round(kills[i - 1].timestamp / 1000);
-              if (killTime - beforeKillTime === 1 || killTime - beforeKillTime === 0) {
+              // if (killTime - beforeKillTime === 1 || killTime - beforeKillTime === 0) {
                 const killPosition: Position = kills[i].position;
                 const beforeKillPosition: Position = kills[i - 1].position;
                 if (this.isNearedUpOrDown(killPosition.y, beforeKillPosition.y)) {
@@ -152,9 +152,9 @@ export class MapComponent implements OnInit, AfterViewInit {
                     killPosition.x = this.repositionXPoint(beforeKillPosition.x, killPosition.x);
                   }
                 }
-              }
+              // }
             }
-          }
+          // }
         }
         kills.forEach(el => {
           if (Math.round(el.timestamp / 1000) === c) {
