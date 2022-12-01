@@ -3,6 +3,7 @@ import { Kill } from 'src/app/core/model/Kill';
 import { MatchDetails } from 'src/app/core/model/MatchDetails';
 import { Position } from 'src/app/core/model/Position';
 import { turrets } from 'src/app/shared/data/turrets';
+import { ConvertSecondsToMinutesSecondsPipe } from 'src/app/shared/services/convert-seconds-to-minutes-seconds.pipe';
 import { MapService } from 'src/app/shared/services/map.service';
 
 @Component({
@@ -20,8 +21,12 @@ export class MapComponent implements OnInit, AfterViewInit {
   turrets = turrets;
   kills: Kill[] = [];
   rangeEl: HTMLInputElement | null = null;
+  timer: HTMLInputElement | null = null;
 
-  constructor(private mapService: MapService) { }
+  constructor(
+    private mapService: MapService,
+    private convertPipe: ConvertSecondsToMinutesSecondsPipe
+  ) { }
 
   ngOnInit(): void {
     this.kills = this.match.kills;
@@ -75,12 +80,6 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Display all kills on map
-   * @param {Kill[]} kills 
-   * @return {void}
-   */
-
-  /**
    * Reposition point too close
    * @param {number} positionX1
    * @param {number} positionX2
@@ -123,11 +122,24 @@ export class MapComponent implements OnInit, AfterViewInit {
    */
   displayKills(kills: Kill[], gameDuration: number): void {
     let c: number = 0;
+    this.rangeEl = <HTMLInputElement>document.getElementById('rangeEl');
+    this.timer = <HTMLInputElement>document.getElementById('timer');
+    if (this.rangeEl !== null) {
+      this.rangeEl.min = "0";	
+      this.rangeEl.max = gameDuration.toString();	
+      this.rangeEl.step = (1 / 60).toString();	
+      this.rangeEl.value = "0";
+    }
+    if (this.timer !== null) {
+      this.timer.innerText = this.convertPipe.transform(c);
+    }
     const it = setInterval(() => {
+      this.rangeEl!.value = c.toString();
+      this.timer!.innerText = this.convertPipe.transform(c);
       if (c !== gameDuration) {
         for (let i = 0; i < kills.length; i++) {
           if (Math.round(kills[i].timestamp / 1000) === c) {
-            if (i >= 0) {
+            if (i > 0) {
               const killTime: number = Math.round(kills[i].timestamp / 1000);
               const beforeKillTime: number = Math.round(kills[i - 1].timestamp / 1000);
               if (killTime - beforeKillTime === 1 || killTime - beforeKillTime === 0) {

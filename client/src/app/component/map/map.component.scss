@@ -1,10 +1,13 @@
 .map-container {
   position: relative;
   width: 100%;
+  height: 100%;
   max-width: 700px;
   min-width: 300px;
   max-height: 700px;
   min-height: 300px;
+  display: flex;
+  flex-direction: column;
   #map {
     width: 100%;
     height: auto;
@@ -24,5 +27,31 @@
     top: 0;
     left: 0;
     z-index: 1;
+  }
+  .map-player {
+    position: relative;
+    width: 100%;
+    height: 30px;
+    z-index: 999;
+    input {
+      width: 100%;
+      margin: auto;
+      position: absolute;
+      top: 0; left: 0; bottom: 0; right: 0;
+    }
+    .timer-container {
+      width: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #fff;
+      color: #111;
+      position: absolute;
+      top: 0; left: 0; bottom: 0; right: 0;
+      margin: auto;
+      opacity: .4;
+      z-index: 5555;
+      border-radius: 4px;
+    }
   }
 }

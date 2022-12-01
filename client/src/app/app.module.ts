@@ -41,6 +41,8 @@ import { ConvertSecondsToMinutesSecondsPipe } from './shared/services/convert-se
   ],
   providers: [
     GameService,
+    ConvertMsToMinutesSecondsPipe,
+    ConvertSecondsToMinutesSecondsPipe
   ],
   bootstrap: [AppComponent]
 })

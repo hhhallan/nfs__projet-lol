@@ -118,7 +118,6 @@ class FormatService {
                             if (!in_array($k1, $expectedKeys)) {
                                 unset($newArray[$k][$k1]);
                             }
-                            // dd($participants);
                             $newArray[$k]['killerImage'] = $this->getImageByParticipantId($participants, $v['killerId']) ?? $participants[0]['image'];
                             $newArray[$k]['victimImage'] = $this->getImageByParticipantId($participants, $v['victimId']) ?? $participants[0]['image'];
                         }
