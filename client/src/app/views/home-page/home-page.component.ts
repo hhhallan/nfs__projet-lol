@@ -73,7 +73,7 @@ export class HomePageComponent implements OnInit {
     p.style.marginBottom = '5px';
 
     span.innerHTML = 'Level ' + summoner.summonerLevel;
-    span.style.fontSize = '.7rem';
+    span.style.fontSize = '1rem';
     span.style.fontWeight = '300';
 
     element.appendChild(p);
