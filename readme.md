@@ -8,7 +8,7 @@
 
 ##### To install project in local
 
-###### To install API. In root of project run :
+###### To install API (in project root) run :
 
 - `composer install`
 
