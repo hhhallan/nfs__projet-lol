@@ -10,12 +10,14 @@
         <div class="kill-card" *ngFor="let kill of match.kills">
 
           <div class="match--type">
-            <p>Type</p>
-            <span class="match--defeat">Ennemy</span>
+            <p>adversaire</p>
+            <span class="match--defeat">MomoDu93</span>
           </div>
 
           <div class="match--player">
-            <div><img src="{{ kill.killerImage }}" alt=""></div> => <div><img src="{{kill.victimImage }}" alt=""></div>
+            <div><img src="{{ kill.killerImage }}" alt="Champion killer"></div>
+            <div class="kill--icon"><img src="../../../assets/img/kill.png" alt=""></div>
+            <div><img src="{{kill.victimImage }}" alt="Champion victim"></div>
           </div>
 
           <div class="match--timestamp">

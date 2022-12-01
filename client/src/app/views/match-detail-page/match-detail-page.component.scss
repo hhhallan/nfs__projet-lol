@@ -5,7 +5,7 @@
 
   h1 {
     text-align: center;
-    font-size: 2.4rem;
+    font-size: 3.6rem;
     font-weight: bold;
     color: white;
     margin-bottom: 50px;
@@ -31,7 +31,6 @@
   .match--detail-container {
     background-color: #C8C8C8;
     overflow: auto;
-    //width: calc(1250px - 700px);
     max-width: 500px;
     width: 100%;
 
@@ -96,13 +95,24 @@
       max-width: 250px;
       min-width: 150px;
       width: 100%;
-      //margin: 0 20px;
 
       div {
         width: 60px;
         height: 60px;
         border-radius: 5px;
-        background-color: #2dd36f;
+        // background-color: #2dd36f;
+
+        &.kill--icon {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: transparent;
+
+          img {
+            width: 50%;
+          }
+        }
+
         img { width: 100%; }
       }
     }
@@ -121,6 +131,50 @@
 
 }
 
-@media screen and (max-width: 1025px) {
+@media screen and (max-width: 730px) {
+  .matches-container {
+    flex-direction: column;
+    max-height: none;
+    align-items: center;
+    justify-content: center;
+  }
 
+  #app-map{
+    padding-right: 0px !important;
+  }
+
+  .map-container{
+    max-width: none;
+  }
+
+  .match--detail-container {
+    background-color: #C8C8C8;
+    overflow: auto;
+
+    max-width: none;
+    margin: calc(100% - 40px);
+  }
+
+  .match--detail-container{
+    max-width: 700px !important;
+    margin-top: 400px !important;
+  }
+}
+
+@media screen and (max-width: 560px) {
+  .match--detail-container{
+    margin-top: 230px !important;
+  }
+}
+
+@media screen and (max-width: 460px) {
+  .match--detail-container{
+    margin-top: 130px !important;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .match--detail-container{
+    margin-top: 50px !important;
+  }
 }
