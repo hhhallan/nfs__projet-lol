@@ -23,9 +23,9 @@ After install. Create `.env.local` file and past a content of `.env`
 
 ###### After this create your database and load your fixtures :
 
-if you use Symfony CLI start you commande with `symfony`
+if you use Symfony CLI start you commande with `symfony console`
 
-else use `php bin`
+else use `php bin/console`
 
 - `symfony console d:d:c`
 
